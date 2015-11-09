@@ -18,3 +18,5 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 iron:router
 mike:mocha
+accounts-base
+accounts-password
