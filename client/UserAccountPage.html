@@ -1,4 +1,6 @@
 <template name="UserAccountPage">
-  "Velkommen bruger med user id" + Meteor.userId();
+
+  Welcome user with id: {{currentUser._id}}
+
   <button id="Logoutbtn">Logout</button>
 </template>

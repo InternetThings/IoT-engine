@@ -1,30 +1,28 @@
 Template.CreateUserPage.events({
-  "click #CreateUserbtn": function(event){
+  "click #CreateUserbtn": function(event) {
     event.preventDefault();
     var newUserEmail = $('#registerEmail').val();
     var passwordFirst = $('#registerPasswordFirst').val();
     var passwordSecond = $('#registerPasswordSecond').val();
 
     if(passwordFirst === passwordSecond) {
-
       console.log("Passwords matcher.");
-
       Accounts.createUser({
         email: newUserEmail,
         password: passwordFirst
       },
       function(error) {
         if(error) {
-          Console.log(error.reason);
+          console.log(error.reason);
           Router.go("/createuserpage");
-        }});
-        //console.log("Account oprettet.");
-        Router.go('/loginpage');
+        } else {
+          Router.go('/loginpage');
+        }
+      });
     }
     else {
-        console.log("Passwords matcher ikke.");
-    }
-    },
+      console.log("Passwords matcher ikke.");
+    }},
 
     'click #Backbtn': function(event) {
       event.preventDefault();
