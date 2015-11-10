@@ -1,20 +1,19 @@
 Template.LoginPage.events({
-  'click Loginbtn': function(event) {
+  'click #Loginbtn': function(event) {
     event.preventDefault();
-    var userEmail = event.target.registerUserEmail.value;
-    var userPassword = event.target.registerPassword.value;
+    var userEmail = $('registerUserEmail').val();
+    var userPassword = $('registerPassword').val();
 
     Meteor.loginWithPassword(userEmail, userPassword, function(error) {
       if (error) {
         console.log(error.reason);
       } else {
-        Router.go('UserAccountPage');
+        Router.go('/useraccountpage');
       }
     });
   },
 
-  'click CreateUserbtn': function() {
-    Console.log("CreateUserbtn trykket på.")
-    Router.go('CreateUserPage');
+  'click #CreateUserbtn': function() {
+    Router.go('/createuserpage');
   }
 });
