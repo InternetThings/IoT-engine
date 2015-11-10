@@ -53,6 +53,21 @@ MochaWeb.testOnly(function() {
             });
         });
 
-        describe('posting data ')
+        describe('posting data to the platform', function() {
+            it('should accept data sent with the access token', function(done) {
+                HTTP.post('/', {headers:{sdtpversion:STDPVersion}, data:{method:'update', token:Session.get('accessToken'), id:Random.id(), data:'test', date:new Date()}}, function(error, result) {
+                    if(error) {
+                        done(error);
+                    }
+                    else {
+                        done();
+                    }
+                });
+            });
+
+            it('should show the new data', function() {
+                chai.assert.equal($('#sensorData').val(), 'test');
+            });
+        });
     });
 });
