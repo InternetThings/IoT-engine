@@ -1,3 +1,16 @@
 <template name="MainPage">
-    This is the main page
+  <head>
+    <title>Welcome</title>
+  </head>
+  <body>
+    {{#if currentUser}}
+        {{> UserPage}}
+    {{else}}
+        {{#if loggingIn}}
+            Logging in...
+        {{else}}
+            {{> LoginPage}}
+        {{/if}}
+    {{/if}}
+  </body>
 </template>
