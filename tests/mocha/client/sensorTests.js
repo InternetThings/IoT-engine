@@ -39,7 +39,7 @@ MochaWeb.testOnly(function() {
                 //Autorun loop that checks for changes to the session variable, if no changes occur on 2000 ms it is considered and error and the test will fail.
                 Tracker.autorun(function(computation) {
                     //If the session variable has a value the test succeeds and we stop the autorun computation.
-                    if(!Session.equals('accessToken', '')) {
+                    if(!Session.equals('accessToken', '') && !Session.equals('accessToken', undefined)) {
                         computation.stop();
                         //And finally we call done to indicate that all tests are completed in this category.
                         done();
@@ -49,17 +49,20 @@ MochaWeb.testOnly(function() {
 
             //Then we check the html element with id tokenField to make sure it has the correct value
             it('should show the correct value in tokenField', function() {
+                console.log($('#tokenField').val());
+                chai.assert($('#tokenField').val() !== '' && $('#tokenField').val() !== undefined);
                 chai.assert(Session.equals('accessToken', $('#tokenField').val()));
             });
         });
 
         describe('posting data to the platform', function() {
             it('should accept data sent with the access token', function(done) {
-                HTTP.post('/', {headers:{sdtpversion:STDPVersion}, data:{method:'update', token:Session.get('accessToken'), id:Random.id(), data:'test', date:new Date()}}, function(error, result) {
+                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:Random.id(), data:'test', date:new Date()}}, function(error, result) {
                     if(error) {
                         done(error);
                     }
                     else {
+                        chai.assert.equal(result, 'Updated');
                         done();
                     }
                 });
