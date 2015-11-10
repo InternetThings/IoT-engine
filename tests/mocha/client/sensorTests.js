@@ -24,17 +24,50 @@ MochaWeb.testOnly(function() {
             }
         });
 
-        describe('retrieve access token', function(done) {
-            chai.assert(Session.equals('accessToken', ''));
-            $('#tokenButton').click();
-            Tracker.autorun(function(computation) {
-                if(!Session.equals('accessToken', '')) {
-                    computation.stop();
-                    done();
-                }
+        //First we need an access token, interface should have a button that generates it, sets a session variable with it and display it in an element with id tokenField.
+        //Again, the function for generating the token lies server side, and so you need to add the done parameter that you call after everything is set up.
+        describe('retrieve access token', function() {
+            //First we make sure the session variable is empty.
+            it('should have an empty session variable called accessToken', function() {
+                chai.assert(Session.equals('accessToken', ''));
+            });
+
+            //Then we click the button and check if it is generated properly
+            it('should generate a token server side and set the session variable', function(done) {
+                //Click the button
+                $('#tokenButton').click();
+                //Autorun loop that checks for changes to the session variable, if no changes occur on 2000 ms it is considered and error and the test will fail.
+                Tracker.autorun(function(computation) {
+                    //If the session variable has a value the test succeeds and we stop the autorun computation.
+                    if(!Session.equals('accessToken', '')) {
+                        computation.stop();
+                        //And finally we call done to indicate that all tests are completed in this category.
+                        done();
+                    }
+                });
+            });
+
+            //Then we check the html element with id tokenField to make sure it has the correct value
+            it('should show the correct value in tokenField', function() {
+                chai.assert(Session.equals('accessToken', $('#tokenField').val()));
             });
         });
 
-        describe('')
+        describe('posting data to the platform', function() {
+            it('should accept data sent with the access token', function(done) {
+                HTTP.post('/', {headers:{sdtpversion:STDPVersion}, data:{method:'update', token:Session.get('accessToken'), id:Random.id(), data:'test', date:new Date()}}, function(error, result) {
+                    if(error) {
+                        done(error);
+                    }
+                    else {
+                        done();
+                    }
+                });
+            });
+
+            it('should show the new data', function() {
+                chai.assert.equal($('#sensorData').val(), 'test');
+            });
+        });
     });
 });
