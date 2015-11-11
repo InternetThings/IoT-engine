@@ -7,6 +7,7 @@ MochaWeb.testOnly(function() {
             //First make sure we are logged in
             if(Meteor.userId) {
                 //We are logged in, setup is done
+                console.log('Logged in');
                 done();
             }
             else {
@@ -18,6 +19,7 @@ MochaWeb.testOnly(function() {
                     }
                     else {
                         //We are logged in, setup is done
+                        console.log('Logged in');
                         done();
                     }
                 });
@@ -49,7 +51,6 @@ MochaWeb.testOnly(function() {
 
             //Then we check the html element with id tokenField to make sure it has the correct value
             it('should show the correct value in tokenField', function() {
-                console.log($('#tokenField').val());
                 chai.assert($('#tokenField').val() !== '' && $('#tokenField').val() !== undefined);
                 chai.assert(Session.equals('accessToken', $('#tokenField').val()));
             });
@@ -66,10 +67,6 @@ MochaWeb.testOnly(function() {
                         done();
                     }
                 });
-            });
-
-            it('should show the new data', function() {
-                chai.assert.equal($('#sensorData').val(), 'test');
             });
         });
     });

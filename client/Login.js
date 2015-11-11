@@ -1,3 +1,13 @@
+Template.LoginPage.onCreated(function() {
+    Session.setDefault('newUser', false);
+});
+
+Template.LoginPage.helpers({
+    newUser:function() {
+        return Session.get('newUser');
+    }
+})
+
 Template.LoginPage.events({
   'click #Loginbtn': function(event) {
     event.preventDefault();
@@ -7,13 +17,17 @@ Template.LoginPage.events({
     Meteor.loginWithPassword(userEmail, userPassword, function(error) {
       if (error) {
         console.log(error.reason);
-      } else {
-        Router.go('/useraccountpage');
       }
     });
   },
 
   'click #CreateUserbtn': function() {
-    Router.go('/createuserpage');
-  }
+      console.log('Clicked')
+    Session.set('newUser', true);
+},
+
+    'click #Backbtn': function() {
+        console.log('clicked');
+        Session.set('newUser', false);
+    }
 });

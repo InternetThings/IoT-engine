@@ -16,18 +16,11 @@ Template.CreateUserPage.events({
       function(error) {
         if(error) {
           Console.log(error.reason);
-          Router.go("/createuserpage");
         }});
         //console.log("Account oprettet.");
-        Router.go('/loginpage');
     }
     else {
         console.log("Passwords matcher ikke.");
     }
-    },
-
-    'click #Backbtn': function(event) {
-      event.preventDefault();
-      Router.go('/loginpage');
     }
   });

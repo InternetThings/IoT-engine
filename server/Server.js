@@ -1,5 +1,3 @@
-Meteor.publish('')
-
 Meteor.methods({
     'generateAccessToken':function() {
         if(Meteor.userId()) {

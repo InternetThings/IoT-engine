@@ -1,8 +1,12 @@
 <template name="LoginPage">
-    <form id="LoginForm">
-        <p>E-mail: <input type="email" name="registerUserEmail"></p>
-        <p>Password: <input type="password" name="registerPassword"></p>
-    </form>
-    <p><button id="Loginbtn">Login</button></p>
-    <p><button id="CreateUserbtn">Create User</button></p>
+    {{#if newUser}}
+        {{> CreateUserPage}}
+    {{else}}
+        <form id="LoginForm">
+            <p>E-mail: <input type="email" name="registerUserEmail"></p>
+            <p>Password: <input type="password" name="registerPassword"></p>
+        </form>
+        <p><button id="Loginbtn">Login</button></p>
+        <p><button id="CreateUserbtn">Create User</button></p>
+    {{/if}}
 </template>

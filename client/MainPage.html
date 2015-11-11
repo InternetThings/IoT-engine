@@ -1,10 +1,7 @@
 <template name="MainPage">
-  <head>
-    <title>Welcome</title>
-  </head>
   <body>
     {{#if currentUser}}
-        {{> UserPage}}
+        {{> yield 'Content'}}
     {{else}}
         {{#if loggingIn}}
             Logging in...
