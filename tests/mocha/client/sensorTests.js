@@ -7,19 +7,17 @@ MochaWeb.testOnly(function() {
             //First make sure we are logged in
             if(Meteor.userId) {
                 //We are logged in, setup is done
-                console.log('Logged in');
                 done();
             }
             else {
                 //We are not login, attempt login with password
-                Meteor.loginWithPassword('Test', "password", function(error) {
+                Meteor.loginWithPassword('test@test.dk', "password", function(error) {
                     if(error) {
                         //User is not created, create new user.
-                        Accounts.createUser({username:'Test', password:'password'}, done);
+                        Accounts.createUser({username:'test@test.dk', password:'password'}, done);
                     }
                     else {
                         //We are logged in, setup is done
-                        console.log('Logged in');
                         done();
                     }
                 });
