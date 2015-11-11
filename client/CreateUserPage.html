@@ -1,9 +1,24 @@
 <template name="CreateUserPage">
-    <form id="CreateUserPageForm">
-        <p>E-mail: <input type="email" id="registerEmail"></p>
-        <p>Password: <input type="password" id="registerPasswordFirst"></p>
-        <p>Password again: <input type="password" id="registerPasswordSecond"></p>
-        <p><button type=submit id="CreateUserbtn">Create</button></p>
-    </form>
-    <p><button id="Backbtn">Back</button></p>
+  <form id="CreateUserPageForm">
+    <div>
+      <p>User name:
+        <input type="text" id="registerUsername">
+      </p>
+      <p>E-mail:
+        <input type="email" id="registerEmail">
+      </p>
+      <p>Password:
+        <input type="password" id="registerPasswordFirst">
+      </p>
+      <p>Password again:
+        <input type="password" id="registerPasswordSecond">
+      </p>
+      <p>
+        <button type=submit id="CreateUserbtn">Create</button>
+      </p>
+    </div>
+  </form>
+  <p>
+    <button id="Backbtn">Back</button>
+  </p>
 </template>
