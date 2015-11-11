@@ -1,5 +1,4 @@
 <template name="MainPage">
-  <body>
     {{#if currentUser}}
         {{> yield 'Content'}}
     {{else}}
@@ -9,5 +8,4 @@
             {{> LoginPage}}
         {{/if}}
     {{/if}}
-  </body>
 </template>

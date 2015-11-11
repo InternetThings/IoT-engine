@@ -5,7 +5,7 @@ MochaWeb.testOnly(function() {
         //Test setup. Done parameter indicates that the function has asynchronous elements, and that done will be called when setup is complete.
         before(function(done) {
             //First make sure we are logged in
-            if(Meteor.userId) {
+            if(Meteor.userId()) {
                 //We are logged in, setup is done
                 done();
             }
@@ -29,7 +29,7 @@ MochaWeb.testOnly(function() {
         describe('retrieve access token', function() {
             //First we make sure the session variable is empty.
             it('should have an empty session variable called accessToken', function() {
-                chai.assert(Session.equals('accessToken', ''));
+                chai.assert.equal($('#tokenField').val(), '');
             });
 
             //Then we click the button and check if it is generated properly
@@ -61,7 +61,7 @@ MochaWeb.testOnly(function() {
                         done(error);
                     }
                     else {
-                        chai.assert.equal(result, 'Updated');
+                        chai.assert.equal(result.content, 'Updated');
                         done();
                     }
                 });

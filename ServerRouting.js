@@ -5,7 +5,7 @@ Router.route('/sensors', {where:'server'})
     .post(function() {
         if(this.request.headers.sdtpversion === SDTPVersion) {
             var message = this.request.body;
-            if(checkToken(message.accessToken)) {
+            if(checkToken(message.token)) {
                 this.response.end('Updated');
             }
             else {
