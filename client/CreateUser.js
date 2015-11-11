@@ -1,14 +1,12 @@
 Template.CreateUserPage.events({
-  "click #CreateUserbtn": function(event){
+  "click #CreateUserbtn": function(event) {
     event.preventDefault();
     var newUserEmail = $('#registerEmail').val();
     var passwordFirst = $('#registerPasswordFirst').val();
     var passwordSecond = $('#registerPasswordSecond').val();
 
     if(passwordFirst === passwordSecond) {
-
       console.log("Passwords matcher.");
-
       Accounts.createUser({
         email: newUserEmail,
         password: passwordFirst

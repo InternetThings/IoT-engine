@@ -11,8 +11,11 @@ Template.LoginPage.helpers({
 Template.LoginPage.events({
   'click #Loginbtn': function(event) {
     event.preventDefault();
-    var userEmail = $('registerUserEmail').val();
-    var userPassword = $('registerPassword').val();
+    var userEmail = $('#registerUserEmail').val();
+    var userPassword = $('#registerPassword').val();
+
+    console.log("Loginbtn trykket på.");
+    console.log("userEmail: " + userEmail + " userPassword: " + userPassword);
 
     Meteor.loginWithPassword(userEmail, userPassword, function(error) {
       if (error) {
