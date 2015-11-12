@@ -1,3 +1,18 @@
+Meteor.publish('tokens', function() {
+    if(this.userId) {
+        return AccessTokens.find({userId:this.userId});
+    }
+});
+
+SensorDataSubscriptions = [];
+
+Meteor.publish('sensorData', function() {
+    if(this.userId) {
+        SensorDataSubscriptions.push({userId:this.userId, subscription:this});
+    }
+    this.ready();
+});
+
 Meteor.methods({
     'generateAccessToken':function() {
         if(Meteor.userId()) {

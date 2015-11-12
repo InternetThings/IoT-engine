@@ -61,9 +61,52 @@ MochaWeb.testOnly(function() {
                         done(error);
                     }
                     else {
+                        console.log(result.content);
                         chai.assert.equal(result.content, 'Updated');
                         done();
                     }
+                });
+            });
+
+            it('should not accept data sent without the access token', function(done) {
+                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:'', id:Random.id(), data:'test', date:new Date()}}, function(error, result) {
+                    if(error) {
+                        done(error);
+                    }
+                    else {
+                        chai.assert.notEqual(result.content, 'Updated');
+                        done();
+                    }
+                });
+            });
+        });
+
+        describe('users', function() {
+            it('should see all their access tokens', function(done) {
+                Meteor.subscribe('tokens', {
+                    onReady:function() {
+                        chai.assert.equal(AccessTokens.findOne().tokens[0], Session.get('accessToken'));
+                        done();
+                    },
+                    onStop:done
+                });
+            });
+
+            it('should receive sensor data from registered sensors', function(done) {
+                Meteor.subscribe('sensorData', {
+                    onReady:function() {
+                        var currentDataCount = SensorData.find().count();
+                        HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:Random.id(), data:'test', date:new Date()}}, function(error, result) {
+                            if(error) {
+                                done(error);
+                            }
+                            else {
+                                chai.assert.equal(currentDataCount+1, SensorData.find().count());
+                                done();
+                            }
+                        });
+                    },
+                    onStop:done
                 });
             });
         });
