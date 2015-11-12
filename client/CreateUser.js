@@ -1,48 +1,13 @@
 Template.CreateUserPage.events({
   "click #CreateUserbtn": function(event) {
     event.preventDefault();
-    var newUsername = "";
-    var newUserEmail = "";
-    var passwordFirst = "";
-    var passwordSecond = "";
-    var valid = true;
+    var newUsername = $('#registerUsername').val();
+    var newUserEmail = $('#registerEmail').val();
+    var passwordFirst = $('#registerPasswordFirst').val();
+    var passwordSecond = $('#registerPasswordSecond').val();
+
     try {
-      validate();
-    } catch (error) {
-      console.log(error);
-    }
-    
-    function validate() {
-      newUsername = $('#registerUsername').val();
-      newUserEmail = $('#registerEmail').val();
-      passwordFirst = $('#registerPasswordFirst').val();
-      passwordSecond = $('#registerPasswordSecond').val();
-
-      if (newUsername !== null && newUsername !== undefined && newUsername !== '') {} else {
-        valid = false;
-        throw "No username was entered.";
-      }
-
-      if (newUserEmail !== null && newUserEmail !== undefined && newUserEmail !== '') {} else {
-        valid = false;
-        throw "No email was entered.";
-      }
-
-      if (passwordFirst !== null && passwordFirst !== undefined && passwordFirst !== '') {} else {
-        valid = false;
-        throw "First password was not entered.";
-      }
-
-      if (passwordSecond !== null && passwordSecond !== undefined && passwordSecond !== '') {} else {
-        valid = false;
-        throw "Second password was not entered.";
-      }
-
-      if (passwordFirst === passwordSecond) {} else {
-        valid = false;
-        throw "Passwords don't match.";
-      }
-
+      var valid = Validate(newUsername, newUserEmail, passwordFirst, passwordSecond);
       if (valid) {
         try {
           Accounts.createUser({
@@ -54,8 +19,40 @@ Template.CreateUserPage.events({
           console.log(error.reason);
         }
       } else {
-        console.log("Error. The user could not be created.");
+        throw "Error. The user could not be created.";
       }
+    } catch (error) {
+      console.log(error);
     }
   }
 });
+
+Validate = function(newUsername, newUserEmail, passwordFirst, passwordSecond) {
+
+  var valid = true;
+  if (newUsername !== null && newUsername !== undefined && newUsername !== '') {} else {
+    valid = false;
+    throw new Error("No username was entered.");
+  }
+
+  if (newUserEmail !== null && newUserEmail !== undefined && newUserEmail !== '') {} else {
+    valid = false;
+    throw new Error("No email was entered.");
+  }
+
+  if (passwordFirst !== null && passwordFirst !== undefined && passwordFirst !== '') {} else {
+    valid = false;
+    throw new Error("First password was not entered.");
+  }
+
+  if (passwordSecond !== null && passwordSecond !== undefined && passwordSecond !== '') {} else {
+    valid = false;
+    throw new Error("Second password was not entered.");
+  }
+
+  if (passwordFirst === passwordSecond) {} else {
+    valid = false;
+    throw new Error("Passwords do not match.");
+  }
+  return valid;
+}
