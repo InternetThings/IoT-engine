@@ -1,6 +1,8 @@
 //Tests for adding sensors to accounts client side
 
 MochaWeb.testOnly(function() {
+    var sensorId = Random.id();
+
     describe('sensor registration', function() {
         //Test setup. Done parameter indicates that the function has asynchronous elements, and that done will be called when setup is complete.
         before(function(done) {
@@ -56,12 +58,11 @@ MochaWeb.testOnly(function() {
 
         describe('posting data to the platform', function() {
             it('should accept data sent with the access token', function(done) {
-                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:Random.id(), data:'test', date:new Date()}}, function(error, result) {
+                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:sensorId, data:'test', date:new Date()}}, function(error, result) {
                     if(error) {
                         done(error);
                     }
                     else {
-                        console.log(result.content);
                         chai.assert.equal(result.content, 'Updated');
                         done();
                     }
@@ -69,7 +70,7 @@ MochaWeb.testOnly(function() {
             });
 
             it('should not accept data sent without the access token', function(done) {
-                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:'', id:Random.id(), data:'test', date:new Date()}}, function(error, result) {
+                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:'', id:sensorId, data:'test', date:new Date()}}, function(error, result) {
                     if(error) {
                         done(error);
                     }
@@ -85,7 +86,24 @@ MochaWeb.testOnly(function() {
             it('should see all their access tokens', function(done) {
                 Meteor.subscribe('tokens', {
                     onReady:function() {
-                        chai.assert.equal(AccessTokens.findOne().tokens[0], Session.get('accessToken'));
+                        chai.assert.equal(AccessTokens.findOne()._id, Session.get('accessToken'));
+                        done();
+                    },
+                    onStop:done
+                });
+            });
+
+            before(function(done) {
+                Meteor.subscribe('sensorData', {
+                    onReady:function() {
+                        HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:sensorId, data:'test', date:new Date()}}, function(error, result) {
+                            if(error) {
+                                done(error);
+                            }
+                            else {
+                                done();
+                            }
+                        });
                         done();
                     },
                     onStop:done
@@ -93,21 +111,20 @@ MochaWeb.testOnly(function() {
             });
 
             it('should receive sensor data from registered sensors', function(done) {
-                Meteor.subscribe('sensorData', {
-                    onReady:function() {
-                        var currentDataCount = SensorData.find().count();
-                        HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:Random.id(), data:'test', date:new Date()}}, function(error, result) {
-                            if(error) {
-                                done(error);
-                            }
-                            else {
-                                chai.assert.equal(currentDataCount+1, SensorData.find().count());
-                                done();
-                            }
-                        });
-                    },
-                    onStop:done
+                Tracker.autorun(function(computation) {
+                    if(SensorData.find().count() > 0) {
+                        computation.stop();
+                        var data = SensorData.findOne();
+                        chai.assert.equal(data.data, 'test');
+                        done();
+                    }
                 });
+            });
+        });
+
+        describe('sharing', function() {
+            it('should display your consumed tokens', function() {
+
             });
         });
     });

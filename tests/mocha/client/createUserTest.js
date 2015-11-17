@@ -4,9 +4,8 @@ MochaWeb.testOnly(function() {
       try {
         Validate("", "test@test.test", "123", "123");
       } catch (error) {
-        chai.assert(error instanceOf Error);
+        chai.assert(error instanceof Error);
         chai.assert(error.message === "No username was entered.");
-        chai.expect(error).to.eql(new Error("No username was entered."));
       }
     });
 
@@ -14,9 +13,8 @@ MochaWeb.testOnly(function() {
       try {
         Validate("test", "", "123", "123");
       } catch (error) {
-        chai.assert(error instanceOf Error);
+        chai.assert(error instanceof Error);
         chai.assert(error.message === "No email was entered.");
-        chai.expect(error).to.eql(new Error("No email was entered."));
       }
     });
 
@@ -24,9 +22,8 @@ MochaWeb.testOnly(function() {
       try {
         Validate("test", "test@test.test", "", "123");
       } catch (error) {
-        chai.assert(error instanceOf Error);
+        chai.assert(error instanceof Error);
         chai.assert(error.message === "First password was not entered.");
-        chai.expect(error).to.eql(new Error("First password was not entered."));
       }
     });
 
@@ -34,9 +31,8 @@ MochaWeb.testOnly(function() {
       try {
         Validate("test", "test@test.test", "123", "");
       } catch (error) {
-        chai.assert(error instanceOf Error);
+        chai.assert(error instanceof Error);
         chai.assert(error.message === "Second password was not entered.");
-        chai.expect(error).to.eql(new Error("Second password was not entered."));
       }
     });
 
@@ -44,9 +40,8 @@ MochaWeb.testOnly(function() {
       try {
         Validate("test", "test@test.test", "123", "321");
       } catch (error) {
-        chai.assert(error instanceOf Error);
-        chai.assert(error.message === "Passwords do not match..");
-        chai.expect(error).to.eql(new Error("Passwords do not match."));
+        chai.assert(error instanceof Error);
+        chai.assert(error.message === "Passwords do not match.");
       }
     });
   });
