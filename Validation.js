@@ -28,18 +28,37 @@ ValidateUserInformation = function(newUsername, newUserEmail, passwordFirst, pas
   return valid;
 }
 
-ValidateRuleSet = function(message, conditions) {
-
+ValidateCondition = function(condition) {
   var valid = true;
-  if (message !== null && message !== undefined && message !== '') {} else {
+  if (condition.sensor_id !== null && condition.sensor_id !== undefined && condition.sensor_id !== '') {} else {
+    valid = false;
+    throw new Error("No sensor_id attached.");
+  }
+
+  if (condition.operator !== null && condition.operator !== undefined && condition.operator !== '') {} else {
+    valid = false;
+    throw new Error("No operator chosen.");
+  }
+
+  if (condition.targetValue !== null && condition.targetValue !== undefined && condition.targetValue !== '') {} else {
+    valid = false;
+    throw new Error("No target value set.");
+  }
+  return valid;
+}
+
+ValidateRuleSet = function(ruleSet) {
+  var valid = true;
+  if (ruleSet.message !== null && ruleSet.message !== undefined && ruleSet.message !== '') {} else {
     valid = false;
     throw new Error("No message attached.");
   }
 
-  if (conditions !== null && conditions !== undefined && conditions.length() !== 0) {} else {
+  if (ruleSet.conditions !== null && ruleSet.conditions !== undefined && ruleSet.conditions.length !== 0) {} else {
     valid = false;
     throw new Error("No conditions defined.");
   }
+  return valid;
 }
 
 EvaluateCondition = function(sensor, condition) {
