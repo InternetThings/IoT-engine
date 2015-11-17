@@ -17,29 +17,3 @@ function CreateRuleSet(message, conditions) {
   }
   ruleSets.push(newRuleSet);
 }
-
-EvaluateCondition = function(sensor, condition) {
-  var eval;
-  switch (condition.operator) {
-    case ">":
-      eval = (sensor.data > condition.targetValue);
-      break;
-    case "<":
-      eval = (sensor.data < condition.targetValue);
-      break;
-    case ">=":
-      eval = (sensor.data >= condition.targetValue);
-      break;
-    case "<=":
-      eval = (sensor.data <= condition.targetValue);
-      break;
-    case "=":
-      eval = (sensor.data === condition.targetValue);
-      break;
-    case "!=":
-      eval = (sensor.data !== condition.targetValue);
-      break;
-    default:
-      eval = false;
-  }
-}

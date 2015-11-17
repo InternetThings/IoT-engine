@@ -45,16 +45,57 @@ MochaWeb.testOnly(function() {
         data: 17
       }
 
-      condition1 = {
+      condition = {
         sensor_id: 1,
-        operator: ">",
+        operator: "",
         targetValue: 15
       }
     });
 
     it('is greater than', function() {
-      var result = EvaluateCondition(sensor, condition1);
-      console.log("result is: " + result);
+      condition.operator = ">";
+      var result = EvaluateCondition(sensor, condition);
+      chai.assert.equal(result, true);
+    });
+
+    it('is less than', function() {
+      condition.operator = "<";
+      condition.targetValue = 20;
+      var result = EvaluateCondition(sensor, condition);
+      chai.assert.equal(result, true);
+    });
+
+    it('is greater than or equal', function() {
+      condition.operator = ">=";
+      condition.targetValue = 17;
+      var result = EvaluateCondition(sensor, condition);
+      chai.assert.equal(result, true);
+      condition.targetValue = 15;
+      var result = EvaluateCondition(sensor, condition);
+      chai.assert.equal(result, true);
+    });
+
+    it('is less than or equal', function() {
+      condition.operator = "<=";
+      condition.targetValue = 17;
+      var result = EvaluateCondition(sensor, condition);
+      chai.assert.equal(result, true);
+      condition.targetValue = 20;
+      var result = EvaluateCondition(sensor, condition);
+      chai.assert.equal(result, true);
+    });
+
+    it('is equal', function() {
+      condition.operator = "=";
+      condition.targetValue = 17;
+      var result = EvaluateCondition(sensor, condition);
+      chai.assert.equal(result, true);
+    });
+
+    it('is not equal', function() {
+      condition.operator = "!=";
+      condition.targetValue = 15;
+      var result = EvaluateCondition(sensor, condition);
       chai.assert.equal(result, true);
     });
   });

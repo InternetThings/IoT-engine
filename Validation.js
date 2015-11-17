@@ -31,15 +31,40 @@ ValidateUserInformation = function(newUsername, newUserEmail, passwordFirst, pas
 ValidateRuleSet = function(message, conditions) {
 
   var valid = true;
-  if (message !== null && message !== undefined && message !== '') {
-  } else {
+  if (message !== null && message !== undefined && message !== '') {} else {
     valid = false;
     throw new Error("No message attached.");
   }
 
-  if (conditions !== null && conditions !== undefined && conditions.length() !== 0) {
-  } else {
+  if (conditions !== null && conditions !== undefined && conditions.length() !== 0) {} else {
     valid = false;
     throw new Error("No conditions defined.");
   }
+}
+
+EvaluateCondition = function(sensor, condition) {
+  var eval;
+  switch (condition.operator) {
+    case ">":
+      eval = (sensor.data > condition.targetValue);
+      break;
+    case "<":
+      eval = (sensor.data < condition.targetValue);
+      break;
+    case ">=":
+      eval = (sensor.data >= condition.targetValue);
+      break;
+    case "<=":
+      eval = (sensor.data <= condition.targetValue);
+      break;
+    case "=":
+      eval = (sensor.data === condition.targetValue);
+      break;
+    case "!=":
+      eval = (sensor.data !== condition.targetValue);
+      break;
+    default:
+      eval = false;
+  }
+  return eval;
 }
