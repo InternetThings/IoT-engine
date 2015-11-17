@@ -7,15 +7,13 @@ Router.route('/sensors', {where:'server'})
             var message = this.request.body;
             if(message.method === 'update') {
                 if(checkToken(message)) {
-                    var token = AccessTokens.findOne({_id:message.token});
-                    var subscription = getSubscription(token.userId);
-                    if(subscription !== undefined) {
-                        subscription.added('sensorData', Random.id(), {
+                    getSubscriptions(message.token, message.id).forEach(function(value) {
+                        value.added('sensorData', Random.id(), {
                             sensorId:message.id,
                             data:message.data,
                             date:message.date
                         });
-                    }
+                    });
                     this.response.end('Updated');
                 }
                 else {
@@ -68,21 +66,12 @@ var checkToken = function(message) {
     }
 }
 
-var getSubscription = function(userId) {
-    var found = false;
-    var i = 0;
-    while(!found && i < SensorDataSubscriptions.length) {
-        if(SensorDataSubscriptions[i].userId = userId) {
-            found = true;
+var getSubscriptions = function(token, sensor) {
+    var subscriptions = [];
+    SensorDataSubscriptions.forEach(function(value) {
+        if(value.sensors[token] === sensor) {
+            subscriptions.push(value.subscription);
         }
-        else {
-            i++;
-        }
-    }
-    if(found) {
-        return SensorDataSubscriptions[i].subscription;
-    }
-    else {
-        return undefined;
-    }
+    });
+    return subscriptions;
 }

@@ -119,18 +119,8 @@ MochaWeb.testOnly(function() {
         });
 
         describe('users', function() {
-            it('should see all their access tokens', function(done) {
-                Meteor.subscribe('tokens', {
-                    onReady:function() {
-                        chai.assert.equal(AccessTokens.findOne()._id, Session.get('accessToken'));
-                        done();
-                    },
-                    onStop:done
-                });
-            });
-
             before(function(done) {
-                Meteor.subscribe('sensorData', {
+                Meteor.subscribe('sensorData', [sensorId], {
                     onReady:function() {
                         HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:sensorId, data:'test', date:new Date()}}, function(error, result) {
                             if(error) {
@@ -158,9 +148,69 @@ MochaWeb.testOnly(function() {
             });
         });
 
+        describe('sensors', function() {
+            var subHandle;
+
+            before(function(done) {
+                subHandle = Meteor.subscribe('sensors', {
+                    onReady:done,
+                    onStop:done
+                });
+            });
+
+            it('should have access to your consumed tokens', function() {
+                chai.assert(AccessTokens.find({sensor:sensorId}).count() > 0);
+            });
+
+            it('should have the correct metadata', function() {
+                var token = AccessTokens.findOne({sensor:sensorId});
+                chai.assert.equal(token.type, 'Temperature');
+                chai.assert.equal(token.location, 'Home Address');
+                chai.assert.equal(token.tags[0], 'Garden');
+                chai.assert.equal(token.tags[1], 'Cucumber');
+            });
+
+            after(function() {
+                subHandle.stop();
+            });
+        });
+
         describe('sharing', function() {
-            it('should display your consumed tokens', function() {
-                
+            before(function(done) {
+                Meteor.subscribe('publicSensors', {
+                    onReady:done,
+                    onStop:done
+                });
+            });
+
+            it('should not show on the public sensors collection', function() {
+                chai.assert(AccessTokens.find({sensor:sensorId}).count() === 0);
+            });
+
+            it('should be able to make a sensor public', function(done) {
+                Meteor.call('changePublicityStatus', sensorId, true, function(error) {
+                    if(error) {
+                        done(error);
+                    }
+                    else {
+                        var token = AccessTokens.findOne({sensor:sensorId});
+                        chai.assert(token !== undefined);
+                        chai.assert(token.public);
+                        done();
+                    }
+                });
+            });
+
+            it('should be able to make a sensor private', function(done) {
+                Meteor.call('changePublicityStatus', sensorId, false, function(error) {
+                    if(error) {
+                        done(error);
+                    }
+                    else {
+                        chai.assert(AccessTokens.findOne({sensor:sensorId}) === undefined);
+                        done();
+                    }
+                });
             });
         });
     });
