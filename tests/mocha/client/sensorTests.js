@@ -57,8 +57,44 @@ MochaWeb.testOnly(function() {
         });
 
         describe('posting data to the platform', function() {
+            it('should not accept data from an unregistered sensor', function(done) {
+                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:sensorId, data:25, date:new Date()}}, function(error, result) {
+                    if(error) {
+                        done(error);
+                    }
+                    else {
+                        chai.assert.equal(result.content, 'Error thrown with message: Invalid access token.');
+                        done();
+                    }
+                });
+            });
+
+            it('should be able to register a sensor with an unconsumed token', function(done) {
+                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'register', token:Session.get('accessToken'), id:sensorId, type:'Temperature', location:'Home Address', tags:['Garden', 'Cucumber']}}, function(error, result) {
+                    if(error) {
+                        done(error);
+                    }
+                    else {
+                        chai.assert.equal(result.content, 'Registered');
+                        done();
+                    }
+                });
+            });
+
+            it('should not be able to register a sensor with a consumed token', function(done) {
+                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'register', token:Session.get('accessToken'), id:sensorId, type:'Temperature', location:'Home Address', tags:['Garden', 'Cucumber']}}, function(error, result) {
+                    if(error) {
+                        done(error);
+                    }
+                    else {
+                        chai.assert.equal(result.content, 'Error thrown with message: Registration failed.');
+                        done();
+                    }
+                });
+            });
+
             it('should accept data sent with the access token', function(done) {
-                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:sensorId, data:'test', date:new Date()}}, function(error, result) {
+                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:sensorId, data:25, date:new Date()}}, function(error, result) {
                     if(error) {
                         done(error);
                     }
@@ -70,7 +106,7 @@ MochaWeb.testOnly(function() {
             });
 
             it('should not accept data sent without the access token', function(done) {
-                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:'', id:sensorId, data:'test', date:new Date()}}, function(error, result) {
+                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:'', id:sensorId, data:25, date:new Date()}}, function(error, result) {
                     if(error) {
                         done(error);
                     }
@@ -124,7 +160,7 @@ MochaWeb.testOnly(function() {
 
         describe('sharing', function() {
             it('should display your consumed tokens', function() {
-
+                
             });
         });
     });
