@@ -30,9 +30,9 @@ Router.route('/sensors', {where:'server'})
                     throwError(this.response, 'Registration failed.');
                 }
             }
-            else (
+            else {
                 throwError(this.response, 'Invalid method.');
-            )
+            }
         }
         else {
             throwError(this.response, ('Invalid protocol version. Please update to SDTP version ' + SDTPVersion + '.'));
