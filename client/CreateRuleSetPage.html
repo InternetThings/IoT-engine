@@ -1,0 +1,33 @@
+<template name="CreateRuleSet">
+  <h1>Create rules</h1>
+  <form id="CreateRuleSetForm">
+    <div>
+      <p>Message:
+        <input id="message" type="text">
+      </p>
+      <select>
+      <option value="">Sensor 1</option>
+      <option value="">Sensor 2</option>
+      <option value="">Sensor 3</option>
+      <option value="">Sensor 4</option>
+    </select>
+      <select>
+        <option value=">">&#62;</option>
+        <option value="<">&#60;</option>
+        <option value="<">&#62;=</option>
+        <option value="<">&#60;=</option>
+        <option value="<">=</option>
+        <option value="<">!=</option>
+      </select>
+    </div>
+  </form>
+  <p>
+    <button id="AddConditionbtn">Add</button>
+  </p>
+  <p>
+    <button id="SaveRuleSetbtn">Save</button>
+  </p>
+  <p>
+    <button id="Backbtn">Back</button>
+  </p>
+</template>
