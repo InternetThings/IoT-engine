@@ -18,7 +18,7 @@ function CreateRuleSet(message, conditions) {
   ruleSets.push(newRuleSet);
 }
 
-function EvaluateOperator(sensor, condition) {
+EvaluateCondition = function(sensor, condition) {
   var eval;
   switch (condition.operator) {
     case ">":
@@ -28,10 +28,10 @@ function EvaluateOperator(sensor, condition) {
       eval = (sensor.data < condition.targetValue);
       break;
     case ">=":
-      eval = (sensor.data >== condition.targetValue);
+      eval = (sensor.data >= condition.targetValue);
       break;
     case "<=":
-      eval = (sensor.data <== condition.targetValue);
+      eval = (sensor.data <= condition.targetValue);
       break;
     case "=":
       eval = (sensor.data === condition.targetValue);

@@ -6,11 +6,10 @@
         <input id="message" type="text">
       </p>
       <select>
-      <option value="">Sensor 1</option>
-      <option value="">Sensor 2</option>
-      <option value="">Sensor 3</option>
-      <option value="">Sensor 4</option>
-    </select>
+        {{#each get_sensors}}
+        <option value="">{{get_sensors._id}}</option>
+        {{/each}}
+      </select>
       <select>
         <option value=">">&#62;</option>
         <option value="<">&#60;</option>

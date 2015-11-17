@@ -35,4 +35,27 @@ MochaWeb.testOnly(function() {
       chai.assert(ruleSet.timeOfEvents.length !== 0);
     });
   });
+
+  describe('evaluate conditions', function() {
+    var sensor;
+    var condition1;
+    before(function() {
+      sensor = {
+        sensor_id: 1,
+        data: 17
+      }
+
+      condition1 = {
+        sensor_id: 1,
+        operator: ">",
+        targetValue: 15
+      }
+    });
+
+    it('is greater than', function() {
+      var result = EvaluateCondition(sensor, condition1);
+      console.log("result is: " + result);
+      chai.assert.equal(result, true);
+    });
+  });
 });
