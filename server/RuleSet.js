@@ -1,19 +1,27 @@
 var conditions = [];
 
-function CreateCondition(sensor, operator, targetValue) {
+CreateCondition = function(sensor, operator, targetValue) {
   var newCondition = {
-    sensor_id: sensor._id,
+    sensor_id: sensor.sensor_id,
     operator: operator,
     targetValue: targetValue
   }
-  conditions.push(newCondition);
+  if (ValidateCondition(newCondition)) {
+    conditions.push(newCondition);
+  } else {
+    throw new Error("Condition could not be created.");
+  }
 }
 
-function CreateRuleSet(message, conditions) {
+CreateRuleSet = function(message) {
   var newRuleSet = {
     message: message,
     conditions: conditions,
     timeOfEvent: undefined
   }
-  ruleSets.push(newRuleSet);
+  if (ValidateRuleSet(newRuleSet)) {
+    ruleSets.push(newRuleSet);
+  } else {
+    throw new Error("RuleSet could not be created.");
+  }
 }

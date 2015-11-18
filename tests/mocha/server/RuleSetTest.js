@@ -1,44 +1,69 @@
 MochaWeb.testOnly(function() {
   describe('validate a ruleset', function() {
     var ruleSet;
-    var condition1;
-    var date;
+    var condition;
+    var sensor;
     before(function() {
       ruleSet = {
         message: "",
-        conditions: [],
-        timeOfEvents: []
+        conditions: []
       }
-      condition1 = {
+      condition = {
         sensor_id: 1,
-        result: true
+        operator: ">",
+        targetValue: 15
+      }
+      sensor = {
+        sensor_id: 1
       }
     });
 
-    it('checks message', function() {
+    it('checks message.', function() {
+      ruleSet.conditions.push(condition);
+      try {
+        ValidateRuleSet(ruleSet);
+      } catch (error) {
+        chai.assert(error instanceof Error);
+        chai.assert(error.message === "No message attached.");
+      }
+    });
+
+    it('checks condition.', function() {
       ruleSet.message = "The temperature is now 35 degrees..."
-      chai.assert(ruleSet.message !== null && ruleSet.message !== undefined && ruleSet.message !== "");
+      try {
+        ValidateRuleSet(ruleSet);
+      } catch (error) {
+        chai.assert(error instanceof Error);
+        chai.assert(error.message === "No condition defined.");
+      }
     });
+  });
 
-    it('checks conditions', function() {
-      ruleSet.conditions.push(
-        condition1
-      );
-      chai.assert(ruleSet.conditions.length !== 0);
+  describe('create condition', function() {
+    it('creates a condition', function() {
+      try {
+        CreateCondition(sensor, condition.operator, condition.targetValue);
+      } catch (error) {
+        chai.assert(error instanceof Error);
+        chai.assert(error.message === "Condition could not be created.");
+      }
     });
+  });
 
-    it('checks timeOfEvents', function() {
-      date = new Date();
-      ruleSet.timeOfEvents.push(
-        date
-      );
-      chai.assert(ruleSet.timeOfEvents.length !== 0);
+  describe('create ruleSet', function() {
+    it('creates a ruleSet', function() {
+      CreateCondition(sensor, condition.operator, condition.targetValue);
+      var newMessage = "Please water my plants while im gone. Thank you.";
+      try {
+        CreateRuleSet(newMessage);
+      } catch (error) {
+        chai.assert(error instanceof Error);
+        chai.assert(error.message === "RuleSet could not be created.");
+      }
     });
   });
 
   describe('evaluate conditions', function() {
-    var sensor;
-    var condition1;
     before(function() {
       sensor = {
         sensor_id: 1,
