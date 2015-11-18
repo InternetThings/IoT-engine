@@ -45,6 +45,7 @@ Meteor.publish('sensorData', function(sensors) {
 Meteor.methods({
     'generateAccessToken':function() {
         if(Meteor.userId()) {
+            AccessTokens.remove({sensor:undefined, userId:Meteor.userId()});
             return AccessTokens.insert({sensor:undefined, userId:Meteor.userId(), public:false});
         }
         else {
@@ -52,11 +53,11 @@ Meteor.methods({
         }
     },
 
-    'changePublicityStatus':function(sensor, public) {
+    'changePublicityStatus':function(token, public) {
         if(Meteor.userId()) {
-            check(sensor, String);
+            check(token, String);
             check(public, Boolean);
-            AccessTokens.update({sensor:sensor, userId:Meteor.userId()}, {$set:{public:public}});
+            AccessTokens.update({_id:token, userId:Meteor.userId()}, {$set:{public:public}});
         }
         else {
             throw new Error('You must be logged in');

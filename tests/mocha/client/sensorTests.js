@@ -2,6 +2,7 @@
 
 MochaWeb.testOnly(function() {
     var sensorId = Random.id();
+    var tokenId;
 
     describe('sensor registration', function() {
         //Test setup. Done parameter indicates that the function has asynchronous elements, and that done will be called when setup is complete.
@@ -42,6 +43,7 @@ MochaWeb.testOnly(function() {
                 Tracker.autorun(function(computation) {
                     //If the session variable has a value the test succeeds and we stop the autorun computation.
                     if(!Session.equals('accessToken', '') && !Session.equals('accessToken', undefined)) {
+                        tokenId = Session.get('accessToken');
                         computation.stop();
                         //And finally we call done to indicate that all tests are completed in this category.
                         done();
@@ -119,8 +121,10 @@ MochaWeb.testOnly(function() {
         });
 
         describe('users', function() {
+            var subHandle;
+
             before(function(done) {
-                Meteor.subscribe('sensorData', [sensorId], {
+                subHandle = Meteor.subscribe('sensorData', [sensorId], {
                     onReady:function() {
                         HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:sensorId, data:'test', date:new Date()}}, function(error, result) {
                             if(error) {
@@ -146,20 +150,21 @@ MochaWeb.testOnly(function() {
                     }
                 });
             });
+
+            after(function() {
+                subHandle.stop();
+            });
         });
 
         describe('sensors', function() {
-            var subHandle;
-
-            before(function(done) {
-                subHandle = Meteor.subscribe('sensors', {
-                    onReady:done,
-                    onStop:done
-                });
-            });
-
             it('should have access to your consumed tokens', function() {
                 chai.assert(AccessTokens.find({sensor:sensorId}).count() > 0);
+            });
+
+            it('should have one sensor-item with a public and private button', function() {
+                chai.assert.equal($('#sensor-item').length, 1);
+                chai.assert.equal($('#public-btn').length, 1);
+                chai.assert.equal($('#private-btn').length, 1);
             });
 
             it('should have the correct metadata', function() {
@@ -169,13 +174,37 @@ MochaWeb.testOnly(function() {
                 chai.assert.equal(token.tags[0], 'Garden');
                 chai.assert.equal(token.tags[1], 'Cucumber');
             });
-
-            after(function() {
-                subHandle.stop();
-            });
         });
 
         describe('sharing', function() {
+            it('should not show on the public sensors collection', function() {
+                chai.assert(AccessTokens.find({_id:tokenId, public:true}).count() === 0);
+            });
+
+            it('should be able to make a sensor public', function(done) {
+                $('#public-btn').click();
+
+                Tracker.autorun(function(computation) {
+                    if(AccessTokens.find({_id:tokenId, public:true}).count() > 0) {
+                        computation.stop();
+                        done();
+                    }
+                });
+            });
+
+            it('should be able to make a sensor private', function(done) {
+                $('#private-btn').click();
+
+                Tracker.autorun(function(computation) {
+                    if(AccessTokens.find({_id:tokenId, public:true}).count() === 0) {
+                        computation.stop();
+                        done();
+                    }
+                });
+            });
+        });
+
+        describe('shared data', function() {
             before(function(done) {
                 Meteor.subscribe('publicSensors', {
                     onReady:done,
@@ -183,32 +212,29 @@ MochaWeb.testOnly(function() {
                 });
             });
 
-            it('should not show on the public sensors collection', function() {
-                chai.assert(AccessTokens.find({sensor:sensorId}).count() === 0);
-            });
-
-            it('should be able to make a sensor public', function(done) {
-                Meteor.call('changePublicityStatus', sensorId, true, function(error) {
-                    if(error) {
-                        done(error);
-                    }
-                    else {
-                        var token = AccessTokens.findOne({sensor:sensorId});
-                        chai.assert(token !== undefined);
-                        chai.assert(token.public);
-                        done();
-                    }
+            it('should be able to see public sensors and subscribe to them', function(done) {
+                var token = AccessTokens.findOne();
+                chai.assert(token !== undefined);
+                Meteor.subscribe('sensorData', [token.sensor], {
+                    onReady:done,
+                    onStop:done
                 });
             });
 
-            it('should be able to make a sensor private', function(done) {
-                Meteor.call('changePublicityStatus', sensorId, false, function(error) {
+            it('should receive data posted to the public sensor', function(done) {
+                var numOfDocs = SensorData.find().count();
+                HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:sensorId, data:32, date:new Date()}}, function(error, result) {
                     if(error) {
                         done(error);
                     }
                     else {
-                        chai.assert(AccessTokens.findOne({sensor:sensorId}) === undefined);
-                        done();
+                        Tracker.autorun(function(computation) {
+                            if(SensorData.find().count() > numOfDocs) {
+                                computation.stop();
+                                chai.assert.equal(SensorData.find().count(), numOfDocs+1);
+                                done();
+                            }
+                        });
                     }
                 });
             });
