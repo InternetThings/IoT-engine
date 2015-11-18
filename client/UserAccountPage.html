@@ -1,8 +1,9 @@
 <template name="UserAccountPage">
 
-  Welcome user with id: {{currentUser._id}}
+  Welcome, {{currentUser.username}}!
 
   <button id="Logoutbtn">Logout</button>
   {{>SensorRegistration}}
   {{>SensorManagement}}
+  {{>CreateRuleSet}}
 </template>

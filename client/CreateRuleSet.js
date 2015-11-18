@@ -1,12 +1,12 @@
 Template.CreateRuleSet.events({
   'click #AddConditionbtn': function(event) {
     event.preventDefault();
-    var dataSource = $('#').val();
+    var sensor = $('#sensorList').val();
     var operator = $('#operatorValue').val();
     var targetValue = $('#targetValue').val();
 
     try {
-      CreateCondition(dataSource, operator, targetValue);
+      CreateCondition(sensor, operator, targetValue);
     } catch (error) {
       console.log(error);
     }
@@ -24,6 +24,17 @@ Template.CreateRuleSet.events({
   }
 });
 
-Template.CreateRuleSet.helpers({
-  
+Template.list_of_sensors.helpers({
+  'get_accessTokens': function() {
+    return AccessTokens.find({}, {
+      fields: {
+        sensor: 1
+      }
+    });
+  },
+
+  'liste': function() {
+    var liste = [1, 2, 3, 4, 5];
+    return liste;
+  }
 });
