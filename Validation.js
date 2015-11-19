@@ -30,9 +30,9 @@ ValidateUserInformation = function(newUsername, newUserEmail, passwordFirst, pas
 
 ValidateCondition = function(condition) {
   var valid = true;
-  if (condition.sensor_id !== null && condition.sensor_id !== undefined && condition.sensor_id !== '') {} else {
+  if (condition.accessToken_id !== null && condition.accessToken_id !== undefined && condition.accessToken_id !== '') {} else {
     valid = false;
-    throw new Error("No sensor_id attached.");
+    throw new Error("No accessToken_id attached.");
   }
 
   if (condition.operator !== null && condition.operator !== undefined && condition.operator !== '') {} else {
@@ -48,42 +48,43 @@ ValidateCondition = function(condition) {
 }
 
 ValidateRuleSet = function(ruleSet) {
-  var valid = true;
-  if (ruleSet.message !== null && ruleSet.message !== undefined && ruleSet.message !== '') {} else {
-    valid = false;
-    throw new Error("No message attached.");
-  }
+    var valid = true;
+    if (ruleSet.message !== null && ruleSet.message !== undefined && ruleSet.message !== '') {} else {
+      valid = false;
+      throw new Error("No message attached.");
+    }
 
-  if (ruleSet.conditions !== null && ruleSet.conditions !== undefined && ruleSet.conditions.length !== 0) {} else {
-    valid = false;
-    throw new Error("No conditions defined.");
+    if (ruleSet.conditions !== null && ruleSet.conditions !== undefined && ruleSet.conditions.length !== 0) {} else {
+      valid = false;
+      throw new Error("No conditions defined.");
+    }
+    return valid;
   }
-  return valid;
-}
-
-EvaluateCondition = function(sensor, condition) {
-  var eval;
-  switch (condition.operator) {
-    case ">":
-      eval = (sensor.data > condition.targetValue);
-      break;
-    case "<":
-      eval = (sensor.data < condition.targetValue);
-      break;
-    case ">=":
-      eval = (sensor.data >= condition.targetValue);
-      break;
-    case "<=":
-      eval = (sensor.data <= condition.targetValue);
-      break;
-    case "=":
-      eval = (sensor.data === condition.targetValue);
-      break;
-    case "!=":
-      eval = (sensor.data !== condition.targetValue);
-      break;
-    default:
-      eval = false;
+  /**
+  EvaluateCondition = function(sensor, condition) {
+    var eval;
+    switch (condition.operator) {
+      case ">":
+        eval = (sensor.data > condition.targetValue);
+        break;
+      case "<":
+        eval = (sensor.data < condition.targetValue);
+        break;
+      case ">=":
+        eval = (sensor.data >= condition.targetValue);
+        break;
+      case "<=":
+        eval = (sensor.data <= condition.targetValue);
+        break;
+      case "=":
+        eval = (sensor.data === condition.targetValue);
+        break;
+      case "!=":
+        eval = (sensor.data !== condition.targetValue);
+        break;
+      default:
+        eval = false;
+    }
+    return eval;
   }
-  return eval;
-}
+  **/

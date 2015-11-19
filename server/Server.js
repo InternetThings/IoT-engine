@@ -61,5 +61,19 @@ Meteor.methods({
         else {
             throw new Error('You must be logged in');
         }
+    },
+
+    'CreateRuleSet': function(message, list_of_conditions) {
+      var newRuleSet = {
+        message: message,
+        conditions: list_of_conditions,
+        timeOfEvent: undefined
+      }
+      if (ValidateRuleSet(newRuleSet)) {
+        RuleSets.insert(newRuleSet);
+      } else {
+        throw new Error("RuleSet could not be created.");
+      }
+      return newRuleSet;
     }
 });
