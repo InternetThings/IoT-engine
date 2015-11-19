@@ -14,8 +14,8 @@ Meteor.publish('publicSensors', function() {
 
 SensorDataSubscriptions = [];
 
-Meteor.publish('sensorData', function(sensors) {
-    if(this.userId && sensors instanceof Array) {
+Meteor.publish('sensorData', function(tokens) {
+    if(this.userId && tokens instanceof Array) {
         var userId = this.userId;
         var i = 0;
         var found = false;
@@ -30,14 +30,13 @@ Meteor.publish('sensorData', function(sensors) {
         if(found) {
             SensorDataSubscriptions.splice(i, 1);
         }
-        var regSensors = {}
-        sensors.forEach(function(value) {
-            var token = AccessTokens.findOne({sensor:value, $or:[{userId:userId}, {public:true}]});
-            if(token !== undefined) {
-                regSensors[token._id] = value;
+        var regTokens = [];
+        tokens.forEach(function(value) {
+            if(AccessTokens.find({_id:value}).count() > 0) {
+                regTokens.push(value);
             }
         });
-        SensorDataSubscriptions.push({userId:this.userId, sensors:regSensors, subscription:this});
+        SensorDataSubscriptions.push({userId:this.userId, tokens:tokens, subscription:this});
     }
     this.ready();
 });

@@ -7,9 +7,9 @@ Router.route('/sensors', {where:'server'})
             var message = this.request.body;
             if(message.method === 'update') {
                 if(checkToken(message)) {
-                    getSubscriptions(message.token, message.id).forEach(function(value) {
+                    getSubscriptions(message.token).forEach(function(value) {
                         value.added('sensorData', Random.id(), {
-                            sensorId:message.id,
+                            sensorId:message.token,
                             data:message.data,
                             date:message.date
                         });
@@ -66,10 +66,13 @@ var checkToken = function(message) {
     }
 }
 
-var getSubscriptions = function(token, sensor) {
+var getSubscriptions = function(token) {
     var subscriptions = [];
     SensorDataSubscriptions.forEach(function(value) {
-        if(value.sensors[token] === sensor) {
+        console.log(value);
+        console.log(token);
+        if(value.tokens.indexOf(token) !== -1) {
+            console.log('Sub found');
             subscriptions.push(value.subscription);
         }
     });

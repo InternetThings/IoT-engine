@@ -1,23 +1,25 @@
 MochaWeb.testOnly(function() {
   describe('user gets created', function() {
-    it("succeeds to create user", function() {
-      Accounts.createUser({
-        username: "user",
-        email: "user@test.test",
-        password: "123"
-      });
+    it("succeeds to create user", function(done) {
+        Accounts.createUser({
+            username: "user",
+            email: "user@test.test",
+            password: "123"
+        }, function(error) {
+            chai.assert(error === undefined);
+            done();
+        });
     });
 
-    it("fails to create the user", function() {
-      try {
+    it("fails to create the user", function(done) {
         Accounts.createUser({
-          username: "user",
-          email: "user@test.test",
-          password: "123"
+            username: "user",
+            email: "user@test.test",
+            password: "123"
+        }, function(error) {
+            chai.assert(error !== undefined);
+            done();
         });
-      } catch (error) {
-        console.log("hej");
-      }
     });
   });
 

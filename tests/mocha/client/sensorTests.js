@@ -124,7 +124,7 @@ MochaWeb.testOnly(function() {
             var subHandle;
 
             before(function(done) {
-                subHandle = Meteor.subscribe('sensorData', [sensorId], {
+                subHandle = Meteor.subscribe('sensorData', [Session.get('accessToken')], {
                     onReady:function() {
                         HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:Session.get('accessToken'), id:sensorId, data:'test', date:new Date()}}, function(error, result) {
                             if(error) {
@@ -215,7 +215,7 @@ MochaWeb.testOnly(function() {
             it('should be able to see public sensors and subscribe to them', function(done) {
                 var token = AccessTokens.findOne();
                 chai.assert(token !== undefined);
-                Meteor.subscribe('sensorData', [token.sensor], {
+                Meteor.subscribe('sensorData', [token._id], {
                     onReady:done,
                     onStop:done
                 });
