@@ -107,6 +107,11 @@ MochaWeb.testOnly(function() {
                 });
             });
 
+            //Testing accessToken list on CreateRuleSetPage.html
+            it('should have an accestoken with a sensor in the list', function() {
+                chai.assert(AccessTokens.find({}, {fields: { sensor: 1}}));
+            });
+
             it('should not accept data sent without the access token', function(done) {
                 HTTP.post('/sensors', {headers:{sdtpversion:SDTPVersion}, data:{method:'update', token:'', id:sensorId, data:25, date:new Date()}}, function(error, result) {
                     if(error) {

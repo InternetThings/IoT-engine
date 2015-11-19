@@ -5,10 +5,8 @@
       <p>Message:
         <input id="message" type="text">
       </p>
-      <select>
-        {{#each get_sensors}}
-          <option value="">{{get_sensors._id}}</option>
-        {{/each}}
+      <select id="sensorList">
+        {{> list_of_sensors}}
       </select>
       <select id="operatorValue">
         <option value=">">&#62;</option>
@@ -29,6 +27,12 @@
     <button id="SaveRuleSetbtn">Save</button>
   </p>
   <p>
-    <button id="Backbtn">Back</button>
+    <button id="AddSensorbtn">Add sensor</button>
   </p>
+</template>
+
+<template name="list_of_sensors">
+  {{#each accessToken in get_accessTokens}}
+    <option value="{{accessToken.sensor}}">{{accessToken.type}}</option>
+  {{/each}}
 </template>
