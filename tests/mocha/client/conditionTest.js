@@ -10,7 +10,8 @@ MochaWeb.testOnly(function() {
     expectedCondition = {
       accessToken_id: undefined,
       operator: ">",
-      targetValue: 15
+      targetValue: 15,
+      fulfilled: false
     }
 
     expectedCondition.accessToken_id = accessToken._id;
@@ -23,14 +24,10 @@ MochaWeb.testOnly(function() {
     });
   });
 
-  /**
     describe('evaluate conditions', function() {
       //TODO Update
       before(function() {
-        sensor = {
-          sensor_id: 1,
-          data: 17
-        }
+        sensor = 17;
 
         condition2 = {
           sensor_id: 1,
@@ -86,5 +83,49 @@ MochaWeb.testOnly(function() {
         chai.assert.equal(result, true);
       });
     });
-    **/
+
+    describe('create ruleSet', function() {
+        before(function(done) {
+            if (Meteor.userId()) {
+              //We are logged in, setup is done
+                done();
+            }
+            else {
+              //We are not login, attempt login with password
+                Meteor.loginWithPassword('test@test.test', "123", function(error) {
+                    if (error) {
+                        //User is not created, create new user.
+                        console.log(error);
+                        Accounts.createUser({
+                            username: 'test@test.test',
+                            password: '123'
+                        }, done);
+                    }
+                    else {
+                        //We are logged in, setup is done
+                        done();
+                    }
+                });
+            }
+        });
+
+        it('creates a ruleSet', function(done) {
+            var message = "Please water my plants while im gone. Thank you.";
+            var conditions = [{
+              accessToken: 1,
+              operator: ">",
+              targetValue: 15
+            }];
+
+            Meteor.call('CreateRuleSet', message, conditions, function(error, ruleSet) {
+                if(error) {
+                    done(error);
+                }
+                else {
+                    chai.assert(ruleSet !== null && ruleSet !== undefined);
+                    done();
+                }
+            });
+        });
+    });
 });

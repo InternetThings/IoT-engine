@@ -60,31 +60,30 @@ ValidateRuleSet = function(ruleSet) {
     }
     return valid;
   }
-  /**
-  EvaluateCondition = function(sensor, condition) {
+
+  EvaluateCondition = function(data, condition) {
     var eval;
     switch (condition.operator) {
       case ">":
-        eval = (sensor.data > condition.targetValue);
+        eval = (data > condition.targetValue);
         break;
       case "<":
-        eval = (sensor.data < condition.targetValue);
+        eval = (data < condition.targetValue);
         break;
       case ">=":
-        eval = (sensor.data >= condition.targetValue);
+        eval = (data >= condition.targetValue);
         break;
       case "<=":
-        eval = (sensor.data <= condition.targetValue);
+        eval = (data <= condition.targetValue);
         break;
       case "=":
-        eval = (sensor.data === condition.targetValue);
+        eval = (data === condition.targetValue);
         break;
       case "!=":
-        eval = (sensor.data !== condition.targetValue);
+        eval = (data !== condition.targetValue);
         break;
       default:
         eval = false;
     }
     return eval;
   }
-  **/
