@@ -36,19 +36,5 @@ MochaWeb.testOnly(function() {
         chai.assert(error.message === "No conditions defined.");
       }
     });
-
-    describe('create ruleSet', function() {
-      it('creates a ruleSet', function() {
-        var message = "Please water my plants while im gone. Thank you.";
-        var conditions = [{
-          accessToken: 1,
-          operator: ">",
-          targetValue: 15
-        }];
-
-        var ruleSet = Meteor.call('CreateRuleSet', message, conditions);
-        chai.assert(ruleSet !== null && ruleSet !== undefined);
-      });
-    });
   });
 });

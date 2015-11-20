@@ -4,6 +4,7 @@ MochaWeb.testOnly(function() {
     });
 
     describe('access tokens collection', function() {
+        console.log('Running tests?');
         it('should be empty on startup', function() {
             chai.assert.equal(AccessTokens.find().count(), 0);
         });
