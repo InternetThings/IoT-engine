@@ -13,12 +13,13 @@ MochaWeb.testOnly(function() {
           done();
         } else {
           //We are not login, attempt login with password
-          Meteor.loginWithPassword('test@test.dk', "password", function(error) {
+          Meteor.loginWithPassword('test@test.test', "123", function(error) {
             if (error) {
               //User is not created, create new user.
+              console.log(error);
               Accounts.createUser({
-                username: 'test@test.dk',
-                password: 'password'
+                username: 'test@test.test',
+                password: '123'
               }, done);
             } else {
               //We are logged in, setup is done

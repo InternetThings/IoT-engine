@@ -69,10 +69,7 @@ var checkToken = function(message) {
 var getSubscriptions = function(token) {
     var subscriptions = [];
     SensorDataSubscriptions.forEach(function(value) {
-        console.log(value);
-        console.log(token);
         if(value.tokens.indexOf(token) !== -1) {
-            console.log('Sub found');
             subscriptions.push(value.subscription);
         }
     });
