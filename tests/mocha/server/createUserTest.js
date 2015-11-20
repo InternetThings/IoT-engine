@@ -1,4 +1,4 @@
-MochaWeb.testOnly(function() {
+/**MochaWeb.testOnly(function() {
   describe('user is created.', function() {
     it('creates user.', function() {
       Accounts.createUser({
@@ -15,3 +15,4 @@ MochaWeb.testOnly(function() {
     });
   });
 });
+**/
