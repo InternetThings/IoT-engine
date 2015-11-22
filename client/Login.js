@@ -1,12 +1,17 @@
 Template.LoginPage.onCreated(function() {
-    Session.setDefault('newUser', false);
+  Session.setDefault('newUser', false);
 });
 
 Template.LoginPage.helpers({
-    newUser:function() {
-        return Session.get('newUser');
-    }
-})
+  newUser: function() {
+    return Session.get('newUser');
+  },
+
+  errorText: function() {
+    console.log(Session.get('error-text'));
+    return Session.get('error-text');
+  }
+});
 
 Template.LoginPage.events({
   'submit #LoginForm': function(event) {
@@ -16,18 +21,21 @@ Template.LoginPage.events({
 
     Meteor.loginWithPassword(userEmail, userPassword, function(error) {
       if (error) {
-        console.log(error.reason);
+        Session.set('error-text', error.message);
+        console.log(error.message);
       }
     });
   },
 
-  'click #CreateUserbtn': function() {
-      console.log('Clicked')
+  'click #GoToCreateUserbtn': function() {
+    console.log('Clicked')
+    Session.set('error-text', '');
     Session.set('newUser', true);
-},
+  },
 
-    'click #Backbtn': function() {
-        console.log('clicked');
-        Session.set('newUser', false);
-    }
+  'click #Backbtn': function() {
+    console.log('clicked');
+    Session.set('error-text', '');
+    Session.set('newUser', false);
+  }
 });

@@ -9,18 +9,18 @@ Template.CreateUserPage.events({
     try {
       var valid = ValidateUserInformation(newUsername, newUserEmail, passwordFirst, passwordSecond);
       if (valid) {
-        try {
-          Accounts.createUser({
-            username: newUsername,
-            email: newUserEmail,
-            password: passwordFirst
-          });
-        } catch (error) {
-          console.log(error);
-        }
+        Accounts.createUser({
+          username: newUsername,
+          email: newUserEmail,
+          password: passwordFirst
+        }, function(error) {
+          if (error) {
+            Session.set('error-text', error.message);
+          }
+        });
       }
     } catch (error) {
-      console.log(error);
+      Session.set('error-text', error.message);
     }
   }
 });
