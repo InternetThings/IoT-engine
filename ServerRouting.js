@@ -7,6 +7,7 @@ Router.route('/sensors', {where:'server'})
             var message = this.request.body;
             if(message.method === 'update') {
                 if(checkToken(message)) {
+                    DataQueue.push({data:message.data, token:message.token});
                     getSubscriptions(message.token).forEach(function(value) {
                         value.added('sensorData', Random.id(), {
                             sensorId:message.token,

@@ -99,8 +99,9 @@ Meteor.methods({
 DataQueue = [];
 
 ParseDataQueue = function() {
-    while(DataQueue.length > 0) {
-        var data = DataQueue.pop();
+    var Queue = DataQueue.splice(0, DataQueue.length);
+    while(Queue.length > 0) {
+        var data = Queue.pop();
         var updatedRuleSets = [];
         RuleSets.find({'conditions.accessToken_id':data.token}).forEach(function(ruleSet) {
             var updatedConditions = {};
