@@ -39,6 +39,12 @@ Template.CreateRuleSet.events({
   }
 });
 
+Template.CreateRuleSet.helpers({
+  'get_conditions': function() {
+    return Session.get('conditions');
+  }
+});
+
 Template.list_of_sensors.helpers({
   'get_accessTokens': function() {
     return AccessTokens.find({}, {
@@ -48,5 +54,11 @@ Template.list_of_sensors.helpers({
         type: 1
       }
     });
+  }
+});
+
+Template.list_of_rulesets.helpers({
+  'get_rulesets': function() {
+    return RuleSets.find({});
   }
 });

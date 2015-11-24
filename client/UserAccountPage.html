@@ -1,9 +1,29 @@
 <template name="UserAccountPage">
-
-  Welcome, {{currentUser.username}}!
-
-  <button id="Logoutbtn">Logout</button>
-  {{>SensorRegistration}}
-  {{>SensorManagement}}
-  {{>CreateRuleSet}}
+  <div class="row">
+    <div class="col-md-12 col-lg-12">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">IoT Platform</a>
+          </div>
+          <form class="navbar-form navbar-right">
+            <div>
+              <label type="text">Welcome, {{currentUser.username}} &nbsp;&nbsp;&nbsp;</label>
+              <button class="logout btn btn-primary" id="Logoutbtn" type="button">Log Out</button>
+            </div>
+          </form>
+          <div>
+            <ul class="nav navbar-nav">
+              <li><a href="#">Add Sensor</a></li>
+              <li><a href="#">Create Notification</a></li>
+              <li><a href="#">View Data and Notifications</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {{>CreateRuleSet}}
+  </div>
 </template>
