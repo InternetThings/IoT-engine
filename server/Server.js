@@ -74,9 +74,10 @@ Meteor.methods({
         }
     },
 
-    'CreateRuleSet': function(message, list_of_conditions) {
+    'CreateRuleSet': function(title, message, list_of_conditions) {
         if(Meteor.userId()) {
           var newRuleSet = {
+            title: title,
             message: message,
             conditions: list_of_conditions,
             timeOfEvent: undefined,

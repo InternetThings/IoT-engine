@@ -49,9 +49,14 @@ ValidateCondition = function(condition) {
 
 ValidateRuleSet = function(ruleSet) {
     var valid = true;
+    if (ruleSet.title !== null && ruleSet.title !== undefined && ruleSet.title !== '') {} else {
+      valid = false;
+      throw new Error("No title defined.");
+    }
+
     if (ruleSet.message !== null && ruleSet.message !== undefined && ruleSet.message !== '') {} else {
       valid = false;
-      throw new Error("No message attached.");
+      throw new Error("No message defined.");
     }
 
     if (ruleSet.conditions !== null && ruleSet.conditions !== undefined && ruleSet.conditions.length !== 0) {} else {

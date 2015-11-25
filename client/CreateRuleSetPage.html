@@ -5,6 +5,10 @@
         Create a ruleset
       </h3>
       <div class="form-group">
+        <label for="title">Title:</label>
+        <input id="title" class="form-control" type="text" required autofocus>
+      </div>
+      <div class="form-group">
         <label for="message">Message:</label>
         <textarea style="resize:none" class="form-control" rows="5" id="message"></textarea>
       </div>
@@ -29,9 +33,8 @@
       <div class="list-group">
         <a href="#" class="list-group-item active">Conditions</a>
         <ul class="list-group">
-          <!-- indsæt liste af condition -->
-          {{#each condition in get_conditions}}
-          <li class="list-group-item">{{condition.operator}}, {{condition.targetValue}}</li>
+          {{#each conditionInfo in get_conditionInfo}}
+          <li class="list-group-item">Sensor {{conditionInfo.sensor}}, {{conditionInfo.location}}, {{conditionInfo.type}} &nbsp; {{conditionInfo.operator}} &nbsp; {{conditionInfo.targetValue}}</li>
           {{/each}}
         </ul>
       </div>
@@ -39,7 +42,6 @@
         Save ruleset
       </button>
     </div>
-
     <div class="col-md-6">
       <h3>
         Your previously created rulesets
@@ -51,6 +53,11 @@
       </div>
       <div class="list-group">
         <a href="#" class="list-group-item active">Conditions</a>
+        <ul class="list-group">
+          {{#each condition in get_ruleset_conditions}}
+          <li class="list-group-item">{{conditionInfo.operator}} &nbsp; {{conditionInfo.targetValue}}</li>
+          {{/each}}
+        </ul>
       </div>
     </div>
   </div>
@@ -59,16 +66,16 @@
 <template name="list_of_sensors">
   <option disabled selected>Choose a sensor</option>
   {{#each accessToken in get_accessTokens}}
-  <option value="{{accessToken_id}}">{{accessToken.type}}, {{accessToken.location}}</option>
+  <option value="{{accessToken._id}}">Sensor {{accessToken.sensor}} {{accessToken.location}} {{accessToken.type}}</option>
   {{/each}}
 </template>
 
 <template name="list_of_rulesets">
-  <!-- Ruleset skal have en titel tilføjet -->
   <option disabled selected>Choose a ruleset</option>
   {{#each ruleset in get_rulesets}}
-  <li class="list-group-item">{{ruleset._id}}</li>
-  {{#each condition in ruleset}}
-  <li class="list-group-item">{{condition.accessToken_id}}</li>
-  {{/each}} {{/each}}
+  <option value="{{ruleset._id}}">{{ruleset.title}}</option>
+  <!-- {{#each condition in ruleset.conditions}}
+  <option value="{{ruleset._id}}">{{condition.accessToken_id}} {{condition.operator}} {{condition.targetValue}}</option>
+  {{/each}} -->
+  {{/each}}
 </template>
