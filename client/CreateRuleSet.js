@@ -2,8 +2,7 @@ Template.CreateRuleSet.onCreated(function() {
   Meteor.subscribe('sensors');
   Meteor.subscribe('ruleSets');
   Session.setDefault('conditions', []);
-  var list = RuleSets.find({}).fetch();
-  console.log("rulesets: " + list);
+  Session.set('list', []);
 });
 
 Template.CreateRuleSet.events({
@@ -42,6 +41,29 @@ Template.CreateRuleSet.events({
         Session.set('conditions', []);
       }
     });
+  },
+
+  'change #rulesetList': function() {
+    var list = [];
+    var conditionInfo;
+    var ruleset_id = $('#rulesetList').val();
+    var ruleset = RuleSets.findOne({
+      _id: ruleset_id
+    });
+
+    var accessToken = AccessTokens.findOne({userId: ruleset.userId});
+
+    ruleset.conditions.forEach(function(condition) {
+      conditionInfo = {
+        sensor: accessToken.sensor,
+        type: accessToken.type,
+        location: accessToken.location,
+        operator: condition.operator,
+        targetValue: condition.targetValue
+      }
+      list.push(conditionInfo);
+    });
+    Session.set('list', list);
   }
 });
 
@@ -72,12 +94,8 @@ Template.CreateRuleSet.helpers({
     return list;
   },
 
-  'get_ruleset_conditions': function() {
-    var ruleset_id = $('#rulesetList').val();
-    var conditions = RuleSets.find({
-      _id: ruleset_id
-    });
-    return conditions;
+  'get_ruleset_conditionInfo': function() {
+    return Session.get('list');
   }
 });
 

@@ -54,8 +54,8 @@
       <div class="list-group">
         <a href="#" class="list-group-item active">Conditions</a>
         <ul class="list-group">
-          {{#each condition in get_ruleset_conditions}}
-          <li class="list-group-item">{{conditionInfo.operator}} &nbsp; {{conditionInfo.targetValue}}</li>
+          {{#each conditionInfo in get_ruleset_conditionInfo}}
+          <li class="list-group-item">Sensor {{conditionInfo.sensor}}, {{conditionInfo.location}}, {{conditionInfo.type}} &nbsp; {{conditionInfo.operator}} &nbsp; {{conditionInfo.targetValue}}</li>
           {{/each}}
         </ul>
       </div>
@@ -74,8 +74,5 @@
   <option disabled selected>Choose a ruleset</option>
   {{#each ruleset in get_rulesets}}
   <option value="{{ruleset._id}}">{{ruleset.title}}</option>
-  <!-- {{#each condition in ruleset.conditions}}
-  <option value="{{ruleset._id}}">{{condition.accessToken_id}} {{condition.operator}} {{condition.targetValue}}</option>
-  {{/each}} -->
   {{/each}}
 </template>

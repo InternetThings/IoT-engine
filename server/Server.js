@@ -23,6 +23,13 @@ Meteor.publish('notifications', function() {
     this.ready();
 });
 
+Meteor.publish('ruleSets', function() {
+    if(this.userId) {
+        return RuleSets.find({userId:this.userId});
+    }
+    this.ready();
+});
+
 SensorDataSubscriptions = [];
 
 Meteor.publish('sensorData', function(tokens) {
