@@ -1,0 +1,17 @@
+<template name="ManageSensors">
+  <input type='text' id='tokenField' disabled value='{{accessToken}}'>
+  <button id='tokenButton'>Generate Token</button>
+  <ul>
+    {{#each sensors}}
+    <li id="sensor-item">
+      {{location}} {{#if public}}
+      <button id="public-btn" disabled>Public</button>
+      <button id="private-btn">Private</button>
+      {{else}}
+      <button id="public-btn">Public</button>
+      <button id="private-btn" disabled>Private</button>
+      {{/if}}
+    </li>
+    {{/each}}
+  </ul>
+</template>
