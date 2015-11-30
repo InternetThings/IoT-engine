@@ -9,14 +9,15 @@
           <form class="navbar-form navbar-right">
             <div>
               <label type="text">Welcome, {{currentUser.username}} &nbsp;&nbsp;&nbsp;</label>
-              <button class="logout btn btn-primary" id="Logoutbtn" type="button">Log Out</button>
+              <!-- <button class="logout btn btn-primary" id="Logoutbtn" type="button" href="{{pathFor route='LoginPage'}}">Log Out</button> -->
+              <li><a href="{{pathFor route='LoginPage'}}">Log Out</a></li>
             </div>
           </form>
           <div>
             <ul class="nav navbar-nav">
               <li><a href="{{pathFor route='NotificationPage'}}">View Data and Notifications</a></li>
               <li><a href="{{pathFor route='CreateRuleSetPage'}}">Create a ruleset</a></li>
-              <li><a href="{{pathFor route='ManageSensorsPage'}}">Manage your sensor</a></li>
+              <li><a href="{{pathFor route='ManageSensorPage'}}">Manage your sensor</a></li>
             </ul>
           </div>
         </div>
@@ -24,7 +25,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    {{>yield}}
+    {{> yield}}
     <!-- {{>CreateRuleSet}} -->
   </div>
 </template>

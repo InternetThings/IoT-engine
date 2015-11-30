@@ -4,13 +4,31 @@ Template.NotificationPage.onCreated(function() {
 
 Template.NotificationPage.helpers({
   'get_notifications': function() {
-    return Notifications.find({}, {
+    var results = [];
+    var notificationInfo;
+    var ruleset;
+    var notifications = Notifications.find({
+      userId: Meteor.userId()
+    }, {
       fields: {
-        //date: 1,
+        date: 1,
         ruleset: 1,
-        message: 1,
-        userId: 1
+        message: 1
       }
     });
+
+    notifications.forEach(function(notification) {
+      ruleset = RuleSets.findOne({
+        _id: notification.ruleset
+      });
+      notificationInfo = {
+        date: notification.date,
+        title: ruleset.title,
+        message: ruleset.message
+      }
+      results.push(notificationInfo);
+    });
+
+    return results;
   }
 });

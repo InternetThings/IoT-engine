@@ -11,15 +11,21 @@ Router.route('/', function() {
     this.layout('UserAccountNavPage');
 });
 
+Router.route('/LoginPage', function() {
+    //this.render('ManageSensors', {to: 'Content'});
+    this.render('LoginPage');
+    this.layout('UserAccountNavPage');
+});
+
 Router.route('/NotificationPage', function() {
     //this.render('UserAccountPage', {to: 'Content'});
     this.render('NotificationPage');
     this.layout('UserAccountNavPage');
 });
 
-Router.route('/ManageSensorsPage', function() {
+Router.route('/ManageSensorPage', function() {
     //this.render('ManageSensors', {to: 'Content'});
-    this.render('ManageSensorsPage');
+    this.render('ManageSensorPage');
     this.layout('UserAccountNavPage');
 });
 

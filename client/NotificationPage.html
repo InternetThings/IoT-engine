@@ -7,10 +7,10 @@
       <div class="list-group">
         <a class="list-group-item active" href="#">Notifications</a>
         <ul class="list-group">
-          {{#each notification in get_notifications}}
-            <li class="list-group-item">{{notification.ruleset}}
-              {{notification.message}}
-              {{notification.userId}}</li>
+          {{#each notificationInfo in get_notifications}}
+            <li class="list-group-item">{{notificationInfo.date}}
+              {{notificationInfo.title}}
+              {{notificationInfo.message}}</li>
             <!--<li class="list-group-item">{{notification.date}} {{notification.ruleset}} {{notification.message}} {{notification.userId}}</li>-->
           {{/each}}
         </ul>
