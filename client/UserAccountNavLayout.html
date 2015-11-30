@@ -1,4 +1,4 @@
-<template name="UserAccountNavPage">
+<template name="UserAccountNavLayout">
   <div class="row">
     <div class="col-md-12 col-lg-12">
       <nav class="navbar navbar-default">
@@ -9,15 +9,20 @@
           <form class="navbar-form navbar-right">
             <div>
               <label type="text">Welcome, {{currentUser.username}} &nbsp;&nbsp;&nbsp;</label>
-              <!-- <button class="logout btn btn-primary" id="Logoutbtn" type="button" href="{{pathFor route='LoginPage'}}">Log Out</button> -->
-              <li><a href="{{pathFor route='LoginPage'}}">Log Out</a></li>
+              <button class="logout btn btn-primary" id="Logoutbtn" type="button" href="{{pathFor route='LoginPage'}}">Log Out</button>
             </div>
           </form>
           <div>
             <ul class="nav navbar-nav">
-              <li><a href="{{pathFor route='NotificationPage'}}">View Data and Notifications</a></li>
-              <li><a href="{{pathFor route='CreateRuleSetPage'}}">Create a ruleset</a></li>
-              <li><a href="{{pathFor route='ManageSensorPage'}}">Manage your sensor</a></li>
+              <li>
+                <a href="{{pathFor route='NotificationPage'}}">View Data and Notifications</a>
+              </li>
+              <li>
+                <a href="{{pathFor route='CreateRuleSetPage'}}">Create a ruleset</a>
+              </li>
+              <li>
+                <a href="{{pathFor route='ManageSensorPage'}}">Manage your sensor</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -25,7 +30,6 @@
     </div>
   </div>
   <div class="container-fluid">
-    {{> yield}}
-    <!-- {{>CreateRuleSet}} -->
+    {{> yield 'Content'}}
   </div>
 </template>

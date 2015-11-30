@@ -2,35 +2,31 @@
 //Main route. Render platform main site.
 
 Router.configure({
-    layoutTemplate: 'UserAccountNavPage'
+    layoutTemplate: 'UserAccountNavLayout'
 })
 
 Router.route('/', function() {
-    //this.render('UserAccountPage', {to: 'Content'});
-    this.render('NotificationPage');
-    this.layout('UserAccountNavPage');
+    this.render('MainPage', {to: 'Main'});
 });
 
 Router.route('/LoginPage', function() {
-    //this.render('ManageSensors', {to: 'Content'});
     this.render('LoginPage');
-    this.layout('UserAccountNavPage');
 });
 
 Router.route('/NotificationPage', function() {
     //this.render('UserAccountPage', {to: 'Content'});
-    this.render('NotificationPage');
-    this.layout('UserAccountNavPage');
+    this.render('NotificationPage', {to: 'Content'});
+    this.layout('UserAccountNavLayout');
 });
 
 Router.route('/ManageSensorPage', function() {
     //this.render('ManageSensors', {to: 'Content'});
-    this.render('ManageSensorPage');
-    this.layout('UserAccountNavPage');
+    this.render('ManageSensorPage', {to: 'Content'});
+    this.layout('UserAccountNavLayout');
 });
 
 Router.route('/CreateRuleSetPage', function() {
     //this.render('ManageSensors', {to: 'Content'});
-    this.render('CreateRuleSetPage');
-    this.layout('UserAccountNavPage');
+    this.render('CreateRuleSetPage', {to: 'Content'});
+    this.layout('UserAccountNavLayout');
 });
