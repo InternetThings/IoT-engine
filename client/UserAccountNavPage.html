@@ -1,4 +1,4 @@
-<template name="UserAccountPage">
+<template name="UserAccountNavPage">
   <div class="row">
     <div class="col-md-12 col-lg-12">
       <nav class="navbar navbar-default">
@@ -14,9 +14,9 @@
           </form>
           <div>
             <ul class="nav navbar-nav">
-              <li><a href="#">View Data and Notifications</a></li>
-              <li><a href="#">Create Notification</a></li>
-              <li><a href="{{pathFor route='ManageSensors'}}">Manage Sensor</a></li>
+              <li><a href="{{pathFor route='NotificationPage'}}">View Data and Notifications</a></li>
+              <li><a href="{{pathFor route='CreateRuleSetPage'}}">Create a ruleset</a></li>
+              <li><a href="{{pathFor route='ManageSensorsPage'}}">Manage your sensor</a></li>
             </ul>
           </div>
         </div>
@@ -24,6 +24,7 @@
     </div>
   </div>
   <div class="container-fluid">
-    {{>CreateRuleSet}}
+    {{>yield}}
+    <!-- {{>CreateRuleSet}} -->
   </div>
 </template>

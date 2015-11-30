@@ -1,11 +1,12 @@
 <template name="MainPage">
-    {{#if currentUser}}
-        {{> yield 'Content'}}
+  {{#if currentUser}}
+    <!-- {{> yield 'Content'}} -->
+    {{> yield}}
     {{else}}
-        {{#if loggingIn}}
-            Logging in...
-        {{else}}
-            {{> LoginPage}}
-        {{/if}}
+    {{#if loggingIn}}
+      Logging in...
+      {{else}}
+      {{> LoginPage}}
     {{/if}}
+  {{/if}}
 </template>
