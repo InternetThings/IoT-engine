@@ -1,9 +1,9 @@
-Template.ManageSensors.onCreated(function() {
+Template.ManageSensorsPage.onCreated(function() {
   Meteor.subscribe('sensors');
   Session.setDefault('accessToken', '');
 });
 
-Template.ManageSensors.helpers({
+Template.ManageSensorsPage.helpers({
   sensors: function() {
     return AccessTokens.find({
       userId: Meteor.userId()
@@ -14,7 +14,7 @@ Template.ManageSensors.helpers({
   }
 });
 
-Template.ManageSensors.events({
+Template.ManageSensorsPage.events({
   'click #public-btn': function() {
     Meteor.call('changePublicityStatus', this._id, true);
   },

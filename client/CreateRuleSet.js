@@ -1,11 +1,11 @@
-Template.CreateRuleSet.onCreated(function() {
+Template.CreateRuleSetPage.onCreated(function() {
   Meteor.subscribe('sensors');
   Meteor.subscribe('ruleSets');
   Session.setDefault('conditions', []);
   Session.set('list', []);
 });
 
-Template.CreateRuleSet.events({
+Template.CreateRuleSetPage.events({
   'click #AddConditionbtn': function(event) {
     event.preventDefault();
     var accessToken_id = $('#sensorList').val();
@@ -67,7 +67,7 @@ Template.CreateRuleSet.events({
   }
 });
 
-Template.CreateRuleSet.helpers({
+Template.CreateRuleSetPage.helpers({
   'get_conditionInfo': function() {
     var conditions = [];
     conditions = Session.get('conditions');
