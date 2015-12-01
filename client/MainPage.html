@@ -1,7 +1,7 @@
 <template name="MainPage">
   {{#if currentUser}}
-    <!-- {{> yield 'Content'}} -->
-    {{> yield 'Main'}}
+    {{> UserAccountNavLayout}}
+    {{> yield 'Content'}}
     {{else}}
     {{#if loggingIn}}
       Logging in...
