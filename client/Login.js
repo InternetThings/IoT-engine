@@ -5,10 +5,6 @@ Template.LoginPage.onCreated(function() {
 Template.LoginPage.helpers({
   newUser: function() {
     return Session.get('newUser');
-  },
-
-  errorText: function() {
-    return Session.get('error-text');
   }
 });
 
@@ -26,12 +22,10 @@ Template.LoginPage.events({
   },
 
   'click #GoToCreateUserbtn': function() {
-    Session.set('error-text', '');
     Session.set('newUser', true);
   },
 
   'click #Backbtn': function() {
-    Session.set('error-text', '');
     Session.set('newUser', false);
   }
 });

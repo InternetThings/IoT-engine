@@ -19,7 +19,7 @@ Template.CreateRuleSetPage.events({
       Session.set('conditions', temp_list);
       $('#targetValue').val("");
     } catch (error) {
-      console.log(error);
+      Session.set('error-text', error.message);
     }
   },
 
@@ -30,7 +30,7 @@ Template.CreateRuleSetPage.events({
     var list_of_conditions = Session.get('conditions');
     Meteor.call('CreateRuleSet', title, message, list_of_conditions, function(error, result) {
       if (error) {
-        console.log(error);
+        Session.set('error-text', error.message);
       } else {
         $('#message').val("");
         $('#title').val("");
@@ -47,7 +47,9 @@ Template.CreateRuleSetPage.events({
       _id: ruleset_id
     });
 
-    var accessToken = AccessTokens.findOne({userId: ruleset.userId});
+    var accessToken = AccessTokens.findOne({
+      userId: ruleset.userId
+    });
 
     ruleset.conditions.forEach(function(condition) {
       conditionInfo = {
@@ -89,7 +91,7 @@ Template.CreateRuleSetPage.helpers({
   },
 
   'get_ruleset_conditionInfo': function() {
-    return Session.get('list');
+    return Session.get('list_conditionInfo');
   }
 });
 
