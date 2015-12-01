@@ -8,7 +8,6 @@ Template.LoginPage.helpers({
   },
 
   errorText: function() {
-    console.log(Session.get('error-text'));
     return Session.get('error-text');
   }
 });
@@ -22,19 +21,16 @@ Template.LoginPage.events({
     Meteor.loginWithPassword(userEmail, userPassword, function(error) {
       if (error) {
         Session.set('error-text', error.message);
-        console.log(error.message);
       }
     });
   },
 
   'click #GoToCreateUserbtn': function() {
-    console.log('Clicked')
     Session.set('error-text', '');
     Session.set('newUser', true);
   },
 
   'click #Backbtn': function() {
-    console.log('clicked');
     Session.set('error-text', '');
     Session.set('newUser', false);
   }

@@ -1,6 +1,6 @@
-Template.UserAccountNavLayout.events({
+Template.UserAccountNavPage.events({
   "click #Logoutbtn": function(event){
-    //event.preventDefault();
+    event.preventDefault();
     Meteor.logout();
   }
 });
