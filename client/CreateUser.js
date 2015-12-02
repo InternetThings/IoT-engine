@@ -15,7 +15,7 @@ Template.CreateUserPage.events({
           password: passwordFirst
         }, function(error) {
           if (error) {
-            Session.set('error-text', error.message);
+            Session.set('error-text', error.reason);
           }
         });
       }

@@ -10,7 +10,8 @@ MochaWeb.testOnly(function() {
         //First make sure we are logged in
         if (Meteor.userId()) {
           //We are logged in, setup is done
-          done();
+          Router.go('/ManageSensorPage');
+          setTimeout(done, 100);
         } else {
           //We are not login, attempt login with password
           Meteor.loginWithPassword('test@test.test', "123", function(error) {
@@ -20,10 +21,19 @@ MochaWeb.testOnly(function() {
               Accounts.createUser({
                 username: 'test@test.test',
                 password: '123'
-              }, done);
+            }, function(error) {
+                if(error) {
+                    done(error);
+                }
+                else {
+                    Router.go('/ManageSensorPage');
+                    setTimeout(done, 100);
+                }
+            });
             } else {
               //We are logged in, setup is done
-              done();
+              Router.go('/ManageSensorPage');
+              setTimeout(done, 100);
             }
           });
         }

@@ -16,7 +16,7 @@ MochaWeb.testOnly(function() {
       }
 
       ruleSetWithoutTitle = {
-        title: ""
+        title: "",
         message: "Please water my plants while im gone. Thank you.",
         conditions: [{
           accessToken: 1,
@@ -26,7 +26,7 @@ MochaWeb.testOnly(function() {
       }
 
       ruleSetWithoutCondition = {
-        title: "Leaving for holiday notification"
+        title: "Leaving for holiday notification",
         message: "Please water my plants while im gone. Thank you.",
         conditions: undefined
       }

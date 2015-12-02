@@ -111,13 +111,14 @@ MochaWeb.testOnly(function() {
 
         it('creates a ruleSet', function(done) {
             var message = "Please water my plants while im gone. Thank you.";
+            var title = 'Test Ruleset';
             var conditions = [{
               accessToken: 1,
               operator: ">",
               targetValue: 15
             }];
 
-            Meteor.call('CreateRuleSet', message, conditions, function(error, ruleSet) {
+            Meteor.call('CreateRuleSet', title, message, conditions, function(error, ruleSet) {
                 if(error) {
                     done(error);
                 }
