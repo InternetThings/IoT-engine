@@ -8,7 +8,6 @@ Template.LoginPage.helpers({
   },
 
   errorText: function() {
-    console.log(Session.get('error-text'));
     return Session.get('error-text');
   }
 });
@@ -19,23 +18,28 @@ Template.LoginPage.events({
     var userEmail = event.target.registerUserEmail.value
     var userPassword = event.target.registerPassword.value
 
-    Meteor.loginWithPassword(userEmail, userPassword, function(error) {
-      if (error) {
-        Session.set('error-text', error.message);
-        console.log(error.message);
-      }
-    });
+    if(userEmail === '') {
+        Session.set('error-text', 'No email entered');
+    }
+    else if(userPassword === '') {
+        Session.set('error-text', 'No password entered');
+    }
+    else {
+        Meteor.loginWithPassword(userEmail, userPassword, function(error) {
+          if (error) {
+            Session.set('error-text', error.reason);
+          }
+        });
+    }
   },
 
   'click #GoToCreateUserbtn': function() {
-    console.log('Clicked')
-    Session.set('error-text', '');
+    Session.set('error-text', undefined);
     Session.set('newUser', true);
   },
 
   'click #Backbtn': function() {
-    console.log('clicked');
-    Session.set('error-text', '');
+    Session.set('error-text', undefined);
     Session.set('newUser', false);
   }
 });

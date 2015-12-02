@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-/**MochaWeb.testOnly(function() {
-=======
 /*MochaWeb.testOnly(function() {
->>>>>>> 4c8421e2622421f163a92b5a6b80967f2fcaa075
   describe('user is created.', function() {
     it('creates user.', function() {
         console.log('User is being created');
@@ -21,9 +17,4 @@
       Meteor.users.remove({username: "test"});
     });
   });
-<<<<<<< HEAD
-});
-**/
-=======
 });*/
->>>>>>> 4c8421e2622421f163a92b5a6b80967f2fcaa075
