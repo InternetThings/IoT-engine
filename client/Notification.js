@@ -1,13 +1,16 @@
 Template.NotificationPage.onCreated(function() {
   Meteor.subscribe('notifications');
+  Meteor.subscribe('ruleSets');
 });
 
 Template.NotificationPage.helpers({
   'get_notifications': function() {
     var results = [];
+    var notifications;
     var notificationInfo;
     var ruleset;
-    var notifications = Notifications.find({
+
+    notifications = Notifications.find({
       userId: Meteor.userId()
     }, {
       fields: {
@@ -20,12 +23,17 @@ Template.NotificationPage.helpers({
     notifications.forEach(function(notification) {
       ruleset = RuleSets.findOne({
         _id: notification.ruleset
+      }, {
+        fields: {
+          title: 1
+        }
       });
       notificationInfo = {
-        date: notification.date,
+        date: notification.date.toLocaleString('da-DK'),
         title: ruleset.title,
-        message: ruleset.message
+        message: notification.message
       }
+
       results.push(notificationInfo);
     });
 

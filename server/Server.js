@@ -90,10 +90,11 @@ Meteor.methods({
             timeOfEvent: undefined,
             userId: Meteor.userId()
           }
-          if (ValidateRuleSet(newRuleSet)) {
+          try  {
+            ValidateRuleSet(newRuleSet);
             RuleSets.insert(newRuleSet);
-          } else {
-            throw new Error("RuleSet could not be created.");
+          } catch(error) {
+            throw error;
           }
           return newRuleSet;
         }

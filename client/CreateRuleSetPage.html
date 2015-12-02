@@ -1,72 +1,107 @@
 <template name="CreateRuleSetPage">
-  <div class="row">
-    <div class="col-md-6">
+
+  <div class="col-md-6">
+    <form>
       <h3>
         Create a ruleset
       </h3>
+
       <div class="form-group">
         <label for="title">Title:</label>
         <input id="title" class="form-control" type="text" required autofocus>
       </div>
+
       <div class="form-group">
         <label for="message">Message:</label>
         <textarea style="resize:none" class="form-control" rows="5" id="message"></textarea>
       </div>
+
       <div class="form-group">
-        <select id="sensorList">
-          {{> list_of_sensors}}
-        </select>
-        <select id="operatorValue">
-          <option disabled selected>Choose an operator</option>
-          <option value=">">&#62;</option>
-          <option value="<">&#60;</option>
-          <option value=">=">&#62;=</option>
-          <option value="<=">&#60;=</option>
-          <option value="=">=</option>
-          <option value="!=">!=</option>
-        </select>
-        <input id="targetValue" type="text" placeholder="Target value">
-        <button id="AddConditionbtn" type="button" class="btn btn-default">
-          Add condition
-        </button>
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-6">
+              <select id="sensorList">
+                {{> list_of_sensors}}
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <select id="operatorValue">
+                <option disabled selected>Choose an operator</option>
+                <option value=">">&#62;</option>
+                <option value="<">&#60;</option>
+                <option value=">=">&#62;=</option>
+                <option value="<=">&#60;=</option>
+                <option value="=">=</option>
+                <option value="!=">!=</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <input id="targetValue" type="text" placeholder="Target value">
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-md-12">
+            <button id="AddConditionbtn" type="button" class="btn btn-default pull-right">
+              Add condition
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="list-group">
-        <a href="#" class="list-group-item active">Conditions</a>
+        <a class="list-group-item active">Conditions</a>
         <ul class="list-group">
           {{#each conditionInfo in get_conditionInfo}}
           <li class="list-group-item">Sensor {{conditionInfo.sensor}}, {{conditionInfo.location}}, {{conditionInfo.type}} &nbsp; {{conditionInfo.operator}} &nbsp; {{conditionInfo.targetValue}}</li>
           {{/each}}
         </ul>
       </div>
-      <button id="SaveRuleSetbtn" type="button" class="btn btn-default">
-        Save ruleset
-      </button>
-    </div>
-    <div class="col-md-6">
-      <h3>
-        Your previously created rulesets
-      </h3>
-      <div class="form-group">
-        <select id="rulesetList">
-          {{> list_of_rulesets}}
-        </select>
+
+      <div class="row">
+        <div class="col-md-12">
+          <button id="SaveRuleSetbtn" type="button" class="btn btn-default pull-right">
+            Save ruleset
+          </button>
+        </div>
       </div>
-      <div class="list-group">
-        <a href="#" class="list-group-item active">Conditions</a>
-        <ul class="list-group">
-          {{#each conditionInfo in get_ruleset_conditionInfo}}
-          <li class="list-group-item">Sensor {{conditionInfo.sensor}}, {{conditionInfo.location}}, {{conditionInfo.type}} &nbsp; {{conditionInfo.operator}} &nbsp; {{conditionInfo.targetValue}}</li>
-          {{/each}}
-        </ul>
-      </div>
+
+    </form>
+    {{> ErrorPage}}
+  </div>
+
+  <div class="col-md-6">
+    <h3>
+      Your previously created rulesets
+    </h3>
+
+    <div class="form-group">
+      <select id="rulesetList">
+        {{> list_of_rulesets}}
+      </select>
     </div>
+
+    <div class="list-group">
+      <a class="list-group-item active">Conditions</a>
+      <ul class="list-group">
+        {{#each conditionInfo in get_ruleset_conditionInfo}}
+        <li class="list-group-item">Sensor {{conditionInfo.sensor}}, {{conditionInfo.location}}, {{conditionInfo.type}} &nbsp; {{conditionInfo.operator}} &nbsp; {{conditionInfo.targetValue}}</li>
+        {{/each}}
+      </ul>
+    </div>
+
   </div>
 </template>
 
 <template name="list_of_sensors">
   <option disabled selected>Choose a sensor</option>
   {{#each accessToken in get_accessTokens}}
-  <option value="{{accessToken._id}}">Sensor {{accessToken.sensor}} {{accessToken.location}} {{accessToken.type}}</option>
+  <option value="{{accessToken._id}}">Sensor {{accessToken.sensor}} &nbsp; > &nbsp; {{accessToken.location}} &nbsp; > &nbsp; {{accessToken.type}}</option>
   {{/each}}
 </template>
 
