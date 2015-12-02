@@ -28,7 +28,8 @@ Template.CreateRuleSetPage.events({
     var title = $('#title').val();
     var message = $('#message').val();
     var list_of_conditions = Session.get('conditions');
-    Meteor.call('CreateRuleSet', title, message, list_of_conditions, function(error, result) {
+
+    Meteor.call('CreateRuleSet', title, message, list_of_conditions, function(error) {
       if (error) {
         Session.set('error-text', error.message);
       } else {
@@ -42,16 +43,17 @@ Template.CreateRuleSetPage.events({
   'change #rulesetList': function() {
     var temp_list = [];
     var conditionInfo;
+    var accessToken;
     var ruleset_id = $('#rulesetList').val();
     var ruleset = RuleSets.findOne({
       _id: ruleset_id
     });
 
-    var accessToken = AccessTokens.findOne({
-      userId: ruleset.userId
-    });
-
     ruleset.conditions.forEach(function(condition) {
+      accessToken = AccessTokens.findOne({
+        _id: condition.accessToken_id
+      });
+
       conditionInfo = {
         sensor: accessToken.sensor,
         type: accessToken.type,
@@ -60,7 +62,19 @@ Template.CreateRuleSetPage.events({
         targetValue: condition.targetValue
       }
       temp_list.push(conditionInfo);
+
     });
+
+    function sort_conditionInfo(a, b) {
+      if (a.sensor < b.sensor)
+        return -1;
+      if (a.sensor > b.sensor)
+        return 1;
+      return 0;
+    }
+
+    temp_list.sort(sort_conditionInfo);
+
     Session.set('list_conditionInfo', temp_list);
   }
 });
@@ -87,6 +101,16 @@ Template.CreateRuleSetPage.helpers({
         results.push(conditionInfo);
       });
     }
+
+    function sort_conditionInfo(a, b) {
+      if (a.sensor < b.sensor)
+        return -1;
+      if (a.sensor > b.sensor)
+        return 1;
+      return 0;
+    }
+    results.sort(sort_conditionInfo);
+
     return results;
   },
 
@@ -98,6 +122,10 @@ Template.CreateRuleSetPage.helpers({
 Template.list_of_sensors.helpers({
   'get_accessTokens': function() {
     return AccessTokens.find({}, {
+      sort: {
+        sensor: 1
+      }
+    }, {
       fields: {
         _id: 1,
         sensor: 1,
@@ -111,6 +139,10 @@ Template.list_of_sensors.helpers({
 Template.list_of_rulesets.helpers({
   'get_rulesets': function() {
     return RuleSets.find({}, {
+      sort: {
+        title: 1
+      }
+    }, {
       fields: {
         title: 1,
       }

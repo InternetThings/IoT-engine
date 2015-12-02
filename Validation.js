@@ -32,7 +32,7 @@ ValidateCondition = function(condition) {
   var valid = true;
   if (condition.accessToken_id !== null && condition.accessToken_id !== undefined && condition.accessToken_id !== '') {} else {
     valid = false;
-    throw new Error("No accessToken_id attached.");
+    throw new Error("No sensor chosen.");
   }
 
   if (condition.operator !== null && condition.operator !== undefined && condition.operator !== '') {} else {
@@ -42,7 +42,7 @@ ValidateCondition = function(condition) {
 
   if (condition.targetValue !== null && condition.targetValue !== undefined && condition.targetValue !== '') {} else {
     valid = false;
-    throw new Error("No target value set.");
+    throw new Error("No target value specified.");
   }
   return valid;
 }
