@@ -26,7 +26,11 @@ Template.CreateRuleSetPage.events({
   'click #SaveRuleSetbtn': function(event) {
     event.preventDefault();
     var title = $('#title').val();
+    title = title.replace(/\w\S*/g, function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
     var message = $('#message').val();
+    message = message.charAt(0).toUpperCase() + message.substr(1);
     var list_of_conditions = Session.get('conditions');
 
     Meteor.call('CreateRuleSet', title, message, list_of_conditions, function(error) {
