@@ -3,6 +3,11 @@ MochaWeb.testOnly(function() {
   var ruleSetWithoutMessage;
   var ruleSetWithoutCondition;
 
+  before(function() {
+      RuleSets.remove({});
+      Notifications.remove({});
+  })
+
   describe('validate a ruleset', function() {
     before(function() {
       ruleSetWithoutMessage = {
