@@ -33,7 +33,6 @@ Template.DataVisualization.onRendered(function() {
             }
         }
     });
-    drawData();
 
     this.autorun(function() {
         AccessTokens.find({}, {fields:{location:1, type:1}}).forEach(function(sensor) {
@@ -50,16 +49,20 @@ Template.DataVisualization.onRendered(function() {
                 var currentY = y;
                 x += (radius*2)+canvas.width*0.05;
                 bubbles[sensor._id] = new SensorBubble(currentX, currentY, radius, sensor.location, undefined, EJSON.parse(DataTypes)['types'][sensor.type], context);
-                bubbles[sensor._id].draw();
             }
         });
+        drawData();
     });
 });
 
 var drawData = function() {
+    console.log('Drawing');
     context = document.getElementById('dataCanvas').getContext('2d');
     for(id in bubbles) {
         bubbles[id].context = context;
+        if(bubbles[id].y+radius+5 > context.canvas.height) {
+            context.canvas.height = bubbles[id].y+radius+5;
+        }
         bubbles[id].draw();
     }
 }
