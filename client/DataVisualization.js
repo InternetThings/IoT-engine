@@ -33,8 +33,6 @@ Template.DataVisualization.onRendered(function() {
             }
         }
     });
-    console.log(canvas.width);
-    console.log(canvas.height);
     drawData();
 
     this.autorun(function() {
@@ -89,7 +87,6 @@ function SensorBubble(x, y, radius, sensorName, value, type, context) {
 
 SensorBubble.prototype = {
     draw:function() {
-        console.log(this.context);
         this.context.clearRect(this.x-(radius+5), this.y-(radius+5), radius*2+10, radius*2+10);
 
         this.context.beginPath();
