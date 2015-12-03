@@ -3,6 +3,10 @@ Template.ManageSensorPage.onCreated(function() {
   Session.setDefault('accessToken', '');
 });
 
+Template.ManageSensorPage.onDestroyed(function() {
+  Session.set('accessToken', '');
+});
+
 Template.ManageSensorPage.helpers({
   sensors: function() {
     return AccessTokens.find({

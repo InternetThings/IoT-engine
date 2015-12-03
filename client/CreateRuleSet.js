@@ -31,7 +31,7 @@ Template.CreateRuleSetPage.events({
 
     Meteor.call('CreateRuleSet', title, message, list_of_conditions, function(error) {
       if (error) {
-        Session.set('error-text', error.message);
+        Session.set('error-text', error.reason);
       } else {
         $('#message').val("");
         $('#title').val("");

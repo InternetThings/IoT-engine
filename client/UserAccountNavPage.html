@@ -4,11 +4,11 @@
       <nav class="navbar navbar-default">
         <div class="container-fluid">
           <div class="navbar-header">
-            <a class="navbar-brand" href="{{pathFor route='NotificationPage'}}">IoT Platform</a>
+            <a class="navbar-brand" href="{{pathFor route='NotificationPage'}}">IoT Platform <span class="glyphicon glyphicon-cloud-upload"></span></a>
           </div>
           <form class="navbar-form navbar-right">
             <div>
-              <label type="text">Welcome, {{currentUser.username}} &nbsp;&nbsp;&nbsp;</label>
+              <label type="text"><span class="glyphicon glyphicon-user"></span> Welcome, {{currentUser.username}} &nbsp;&nbsp;&nbsp;</label>
               <button class="logout btn btn-primary" id="Logoutbtn" type="button">Log Out</button>
             </div>
           </form>

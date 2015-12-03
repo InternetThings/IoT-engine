@@ -8,12 +8,12 @@
 
       <div class="form-group">
         <label for="title">Title</label>
-        <input id="title" class="form-control" type="text" required autofocus>
+        <input autofocus class="form-control" id="title" required type="text">
       </div>
 
       <div class="form-group">
         <label for="message">Message</label>
-        <textarea id="message" style="resize:none" class="form-control" rows="5"></textarea>
+        <textarea class="form-control" id="message" rows="5" style="resize:none"></textarea>
       </div>
 
       <div class="form-group">
@@ -41,7 +41,7 @@
             </div>
 
             <div class="col-md-2">
-              <input id="targetValue" style="width:100%" type="text" placeholder="Target value">
+              <input id="targetValue" placeholder="Target value" style="width:100%" type="text">
             </div>
 
           </div>
@@ -52,7 +52,7 @@
         <div class="row">
           <div class="col-md-12">
 
-            <button id="AddConditionbtn" type="button" class="btn btn-default pull-right">
+            <button class="btn btn-default pull-right" id="AddConditionbtn" type="button">
               Add condition
             </button>
 
@@ -64,8 +64,16 @@
         <a class="list-group-item active">Added conditions</a>
         <ul class="list-group">
           {{#each conditionInfo in get_conditionInfo}}
-          <li class="list-group-item">
-            <strong>{{conditionInfo.sensor}}</strong> &nbsp; - &nbsp; {{conditionInfo.location}} &nbsp; - &nbsp; {{conditionInfo.type}} &nbsp; {{conditionInfo.operator}} &nbsp; {{conditionInfo.targetValue}}</li>
+            <li class="list-group-item">
+              <strong>{{conditionInfo.sensor}}</strong>
+              &nbsp; - &nbsp;
+              {{conditionInfo.location}}
+              &nbsp; - &nbsp;
+              {{conditionInfo.type}}
+              &nbsp;
+              {{conditionInfo.operator}}
+              &nbsp;
+              {{conditionInfo.targetValue}}</li>
           {{/each}}
         </ul>
       </div>
@@ -73,7 +81,7 @@
       <div class="row">
         <div class="col-md-12">
 
-          <button id="SaveRuleSetbtn" type="button" class="btn btn-default pull-right">
+          <button class="btn btn-default pull-right" id="SaveRuleSetbtn" type="button">
             Save ruleset
           </button>
 
@@ -97,7 +105,7 @@
     </h3>
 
     <div class="form-group">
-      <select id="rulesetList">
+      <select id="rulesetList" style="width:50%">
         {{> list_of_rulesets}}
       </select>
     </div>
@@ -106,8 +114,9 @@
       <a class="list-group-item active">Associated conditions</a>
       <ul class="list-group">
         {{#each conditionInfo in get_ruleset_conditionInfo}}
-        <li class="list-group-item">
-          <strong>{{conditionInfo.sensor}}</strong> &nbsp; - &nbsp; {{conditionInfo.location}} &nbsp; - &nbsp; {{conditionInfo.type}} &nbsp; {{conditionInfo.operator}} &nbsp; {{conditionInfo.targetValue}}</li>
+          <li class="list-group-item">
+            <strong>{{conditionInfo.sensor}}</strong> &nbsp; - &nbsp; {{conditionInfo.location}} &nbsp; - &nbsp; {{conditionInfo.type}} &nbsp; {{conditionInfo.operator}} &nbsp; {{conditionInfo.targetValue}}
+          </li>
         {{/each}}
       </ul>
     </div>
@@ -118,13 +127,13 @@
 <template name="list_of_sensors">
   <option disabled selected>Choose a sensor</option>
   {{#each accessToken in get_accessTokens}}
-  <option value="{{accessToken._id}}">{{accessToken.sensor}} &nbsp; - &nbsp; {{accessToken.location}} &nbsp; - &nbsp; {{accessToken.type}}</option>
+    <option value="{{accessToken._id}}">{{accessToken.sensor}} &nbsp; - &nbsp; {{accessToken.location}} &nbsp; - &nbsp; {{accessToken.type}}</option>
   {{/each}}
 </template>
 
 <template name="list_of_rulesets">
   <option disabled selected>Choose a ruleset</option>
   {{#each ruleset in get_rulesets}}
-  <option value="{{ruleset._id}}">{{ruleset.title}}</option>
+    <option value="{{ruleset._id}}">{{ruleset.title}}</option>
   {{/each}}
 </template>
