@@ -5,7 +5,7 @@ Template.LoginPage.onCreated(function() {
 Template.LoginPage.helpers({
   newUser: function() {
     return Session.get('newUser');
-    }
+  }
 });
 
 Template.LoginPage.events({
@@ -13,18 +13,17 @@ Template.LoginPage.events({
     event.preventDefault();
     var userEmail = event.target.registerUserEmail.value
     var userPassword = event.target.registerPassword.value
-    if(userEmail === '') {
-        Session.set('error-text', 'No email entered');
-    }
-    else if(userPassword === '') {
-        Session.set('error-text', 'No password entered');
-    }
-    else {
-        Meteor.loginWithPassword(userEmail, userPassword, function(error) {
-          if (error) {
-            Session.set('error-text', error.reason);
-          }
-        });
+
+    if (userEmail === '') {
+      Session.set('error-text', 'No email entered');
+    } else if (userPassword === '') {
+      Session.set('error-text', 'No password entered');
+    } else {
+      Meteor.loginWithPassword(userEmail, userPassword, function(error) {
+        if (error) {
+          Session.set('error-text', error.reason);
+        }
+      });
     }
   },
 

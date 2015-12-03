@@ -13,6 +13,10 @@ Template.NotificationPage.helpers({
     notifications = Notifications.find({
       userId: Meteor.userId()
     }, {
+      sort: {
+        date: -1
+      }
+    }, {
       fields: {
         date: 1,
         ruleset: 1,

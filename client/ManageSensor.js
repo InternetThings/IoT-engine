@@ -7,6 +7,10 @@ Template.ManageSensorPage.helpers({
   sensors: function() {
     return AccessTokens.find({
       userId: Meteor.userId()
+    }, {
+      sort: {
+        sensor: 1
+      }
     });
   },
   accessToken: function() {

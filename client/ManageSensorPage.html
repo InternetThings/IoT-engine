@@ -1,18 +1,17 @@
 <template name="ManageSensorPage">
+
   <div class="col-md-6">
-    <div class="row">
-      <input type='text' id='tokenField' disabled value='{{accessToken}}'> &nbsp;&nbsp;&nbsp;
-      <button id='tokenButton'>Generate Token</button>
-    </div>
-    <p>&nbsp;</p>
-    <div class="row">
+    <div class="form-group">
+      <h3>
+        Sensor management
+      </h3>
       <div class="list-group">
-        <a class="list-group-item active">Your sensors</a>
+        <a class="list-group-item active">Added sensors</a>
         <ul class="list-group">
           {{#each sensors}}
           <li id="sensor-item" class="list-group-item">
             <div class="btn-toolbar">
-              {{sensor}} &nbsp; - &nbsp; {{type}} &nbsp; - &nbsp; {{location}} {{#if public}}
+              <strong>{{sensor}}</strong> &nbsp; - &nbsp; {{type}} &nbsp; - &nbsp; {{location}} {{#if public}}
               <button id="public-btn" class="btn pull-right list-group-item btn-xs" disabled>Public</button> &nbsp;
               <button id="private-btn" class="btn pull-right list-group-item btn-xs">Private</button>
               {{else}}
@@ -26,4 +25,16 @@
       </div>
     </div>
   </div>
+
+  <div class="col-md-6">
+    <h3>
+      Generate a token
+    </h3>
+    <div class="form-group">
+      <input id="tokenField" type="text" disabled value="{{accessToken}}"> &nbsp;&nbsp;&nbsp;
+      <button id="tokenButton" class="btn">Generate</button>
+    </div>
+    <div class="well well-lg">Generate an access token and use it to register your sensor within the platform</div>
+  </div>
+
 </template>

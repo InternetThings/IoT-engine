@@ -94,7 +94,7 @@ Meteor.methods({
             ValidateRuleSet(newRuleSet);
             RuleSets.insert(newRuleSet);
           } catch(error) {
-            throw error;
+            throw new Meteor.Error("", error.message);
           }
           return newRuleSet;
         }
