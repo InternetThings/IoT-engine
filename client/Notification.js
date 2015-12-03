@@ -33,7 +33,7 @@ Template.NotificationPage.helpers({
         }
       });
 
-      if(ruleSet) {
+      if(ruleset) {
           notificationInfo = {
             date: notification.date.toLocaleString('da-DK'),
             title: ruleset.title,
