@@ -30,10 +30,13 @@
     <h3>
       Generate a token
     </h3>
-    <div class="form-group">
-      <input id="tokenField" type="text" disabled value="{{accessToken}}"> &nbsp;&nbsp;&nbsp;
-      <button id="tokenButton" class="btn">Generate</button>
+    <div class="input-group input-group-lg">
+      <input id="tokenField" type="text" class="form-control input-lg" disabled value="{{accessToken}}">
+      <div class="input-group-btn">
+          <button id="tokenButton" class="btn btn-primary input-lg">Generate</button>
     </div>
+    </div>
+    <br>
     <div class="well well-lg">Generate an access token and use it to register your sensor within the platform</div>
   </div>
 

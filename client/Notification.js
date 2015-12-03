@@ -32,13 +32,16 @@ Template.NotificationPage.helpers({
           title: 1
         }
       });
-      notificationInfo = {
-        date: notification.date.toLocaleString('da-DK'),
-        title: ruleset.title,
-        message: notification.message
-      }
 
-      results.push(notificationInfo);
+      if(ruleSet) {
+          notificationInfo = {
+            date: notification.date.toLocaleString('da-DK'),
+            title: ruleset.title,
+            message: notification.message
+          }
+
+        results.push(notificationInfo);
+    }
     });
 
     return results;
