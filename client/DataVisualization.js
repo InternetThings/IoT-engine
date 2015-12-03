@@ -48,6 +48,7 @@ Template.DataVisualization.onRendered(function() {
                 }
                 var currentX = x;
                 var currentY = y;
+                console.log('currentY = ' + currentY + ' currentX = ' + currentX + ' canvas.hight = ' + canvas.height);
                 x += (radius*2)+canvas.width*0.05;
                 bubbles[sensor._id] = new SensorBubble(currentX, currentY, radius, sensor.location, undefined, EJSON.parse(DataTypes)['types'][sensor.type], context);
                 bubbles[sensor._id].draw();
