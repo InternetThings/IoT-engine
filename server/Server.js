@@ -138,7 +138,7 @@ ParseDataQueue = function() {
     tooOld.setDate(tooOld.getDate()-1);
     RuleSets.find({'conditions.fulfilled':{$nin:[false]}}).forEach(function(ruleSet) {
         if(Notifications.find({date:{$gt:tooOld}, ruleSet:ruleSet._id}).count() === 0) {
-            Notifications.insert({date:now, ruleSet:ruleSet._id, message:ruleSet.message, userId:ruleSet.userId});
+            Notifications.insert({date:now, ruleSet:ruleSet._id, userId:ruleSet.userId});
         }
     });
     Meteor.setTimeout(ParseDataQueue, 10000);
