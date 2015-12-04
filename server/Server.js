@@ -91,11 +91,11 @@ Meteor.methods({
           }
           try  {
             ValidateRuleSet(newRuleSet);
-            RuleSets.insert(newRuleSet);
+            var rulesetId = RuleSets.insert(newRuleSet);
+            return rulesetId;
           } catch(error) {
             throw new Meteor.Error('Error', error.message);
           }
-          return newRuleSet;
         }
         else {
             throw new Error('User must be logged in');
