@@ -104,7 +104,7 @@ Meteor.startup(function() {
   if (RuleSets.find().count() === 0) {
     RuleSets.insert({
       "_id": "uPCFRZP6erL8GgLse",
-      "title": "Away on vacation",
+      "title": "Away On Vacation",
       "message": "If you see this message could you please water my pallet, thank you!",
       "conditions": [{
         "accessToken_id": "HfNzbFbWAXhrh65w7",
@@ -122,7 +122,7 @@ Meteor.startup(function() {
 
     RuleSets.insert({
       "_id": "74SXCd8Dz8eTbjrsk",
-      "title": "Bed room humidity",
+      "title": "Bed Room Humidity",
       "message": "The bed room is too humid.",
       "conditions": [{
         "accessToken_id": "5fC4hnugCQjJudYjF",
@@ -135,8 +135,8 @@ Meteor.startup(function() {
 
     RuleSets.insert({
       "_id": "pCt75N3oTDqQuSMLb",
-      "title": "Green house condition",
-      "message": "Your plants current condition are less than ideal",
+      "title": "Green House Condition",
+      "message": "Your plant's current condition are less than ideal",
       "conditions": [{
         "accessToken_id": "TcRyQtkNdtwJJMmCe",
         "operator": ">",
@@ -180,7 +180,6 @@ Meteor.startup(function() {
       "_id": "565fffbf403b6b1d1b7e18bf",
       "date": new Date("July 08, 2016, 13:00:00"),
       "ruleset": "uPCFRZP6erL8GgLse",
-      "message": "If you see this message could you please water my pallet, thank you! :)",
       "userId": user_id
     });
 
@@ -188,7 +187,6 @@ Meteor.startup(function() {
       "_id": "56600249403b6b1d1b7e18c0",
       "date": new Date("July 14, 2016, 10:00:00"),
       "ruleset": "74SXCd8Dz8eTbjrsk",
-      "message": "The humidity in the bed room is too high",
       "userId": user_id
     });
 
@@ -196,7 +194,6 @@ Meteor.startup(function() {
       "_id": "566002dc403b6b1d1b7e18c1",
       "date": new Date("July 20, 2016, 11:00:00"),
       "ruleset": "pCt75N3oTDqQuSMLb",
-      "message": "Your plants current condition are less than ideal",
       "userId": user_id
     });
 
@@ -204,7 +201,6 @@ Meteor.startup(function() {
       "_id": "56604266403b6b1d1b7e18c2",
       "date": new Date("July 18, 2016, 14:00:00"),
       "ruleset": "SsRgeAY9pezsQpm9z",
-      "message": "The window is open",
       "userId": user_id
     });
   }

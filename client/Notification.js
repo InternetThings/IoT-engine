@@ -19,8 +19,7 @@ Template.NotificationPage.helpers({
     }, {
       fields: {
         date: 1,
-        ruleset: 1,
-        message: 1
+        ruleset: 1
       }
     });
 
@@ -29,7 +28,8 @@ Template.NotificationPage.helpers({
         _id: notification.ruleset
       }, {
         fields: {
-          title: 1
+          title: 1,
+          message: 1
         }
       });
 
@@ -37,7 +37,7 @@ Template.NotificationPage.helpers({
           notificationInfo = {
             date: notification.date.toLocaleString('da-DK'),
             title: ruleset.title,
-            message: notification.message
+            message: ruleset.message
           }
 
         results.push(notificationInfo);
