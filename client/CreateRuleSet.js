@@ -2,9 +2,9 @@ Template.CreateRuleSetPage.onCreated(function() {
   Meteor.subscribe('sensors');
   Meteor.subscribe('ruleSets');
   Session.set('conditions', []);
-  Session.set('list_conditionInfo', []);
   Session.setDefault('selectedSensor', undefined);
   Session.setDefault('selectedOperator', undefined);
+  Session.setDefault('selectedRuleset', undefined);
 });
 
 Template.CreateRuleSetPage.events({
@@ -45,53 +45,21 @@ Template.CreateRuleSetPage.events({
     message = message.charAt(0).toUpperCase() + message.substr(1);
     var list_of_conditions = Session.get('conditions');
 
-    Meteor.call('CreateRuleSet', title, message, list_of_conditions, function(error) {
+    Meteor.call('CreateRuleSet', title, message, list_of_conditions, function(error, rulesetId) {
       if (error) {
         Session.set('error-text', error.reason);
       } else {
         $('#message').val("");
         $('#title').val("");
         Session.set('conditions', []);
+        Session.set('selectedRuleset', rulesetId);
       }
     });
   },
 
-  'change #rulesetList': function() {
-    var temp_list = [];
-    var conditionInfo;
-    var accessToken;
-    var ruleset_id = $('#rulesetList').val();
-    var ruleset = RuleSets.findOne({
-      _id: ruleset_id
-    });
-
-    ruleset.conditions.forEach(function(condition) {
-      accessToken = AccessTokens.findOne({
-        _id: condition.accessToken_id
-      });
-
-      conditionInfo = {
-        sensor: accessToken.sensor,
-        type: accessToken.type,
-        location: accessToken.location,
-        operator: condition.operator,
-        targetValue: condition.targetValue
-      }
-      temp_list.push(conditionInfo);
-
-    });
-
-    function sort_conditionInfo(a, b) {
-      if (a.sensor < b.sensor)
-        return -1;
-      if (a.sensor > b.sensor)
-        return 1;
-      return 0;
-    }
-
-    temp_list.sort(sort_conditionInfo);
-
-    Session.set('list_conditionInfo', temp_list);
+  'click .rulesetItem': function(event) {
+      event.preventDefault();
+      Session.set('selectedRuleset', event.currentTarget.id);
   }
 });
 
@@ -131,7 +99,39 @@ Template.CreateRuleSetPage.helpers({
   },
 
   'get_ruleset_conditionInfo': function() {
-    return Session.get('list_conditionInfo');
+      var temp_list = [];
+      var ruleset = RuleSets.findOne({
+        _id: Session.get('selectedRuleset')
+      });
+
+      if(ruleset) {
+      ruleset.conditions.forEach(function(condition) {
+        var accessToken = AccessTokens.findOne({
+          _id: condition.accessToken_id
+        });
+
+        var conditionInfo = {
+          sensor: accessToken.sensor,
+          type: accessToken.type,
+          location: accessToken.location,
+          operator: condition.operator,
+          targetValue: condition.targetValue
+        }
+        temp_list.push(conditionInfo);
+
+      });
+
+      function sort_conditionInfo(a, b) {
+        if (a.sensor < b.sensor)
+          return -1;
+        if (a.sensor > b.sensor)
+          return 1;
+        return 0;
+      }
+
+      temp_list.sort(sort_conditionInfo);
+    }
+    return temp_list;
 },
 
     'list_of_sensors':function() {
@@ -153,19 +153,21 @@ Template.CreateRuleSetPage.helpers({
             operatorList.splice(index, 1);
         }
         return operatorList;
-    }
-});
+    },
 
-Template.list_of_rulesets.helpers({
-  'get_rulesets': function() {
-    return RuleSets.find({}, {
-      sort: {
-        title: 1
-      }
-    }, {
-      fields: {
-        title: 1,
-      }
-    });
-  }
+    'selectedRuleset':function() {
+        return RuleSets.findOne({_id:Session.get('selectedRuleset')}, {sort:{title:1}, fields:{title:1}});
+    },
+
+    'get_rulesets': function() {
+      return RuleSets.find({_id:{$nin:[Session.get('selectedRuleset')]}}, {
+        sort: {
+          title: 1
+        }
+      }, {
+        fields: {
+          title: 1,
+        }
+      });
+    }
 });
