@@ -3,13 +3,25 @@ Template.CreateRuleSetPage.onCreated(function() {
   Meteor.subscribe('ruleSets');
   Session.set('conditions', []);
   Session.set('list_conditionInfo', []);
+  Session.setDefault('selectedSensor', undefined);
+  Session.setDefault('selectedOperator', undefined);
 });
 
 Template.CreateRuleSetPage.events({
+    'click .operatorItem':function(event) {
+        event.preventDefault();
+        Session.set('selectedOperator', event.currentTarget.id);
+    },
+
+    'click .sensorItem':function(event) {
+        event.preventDefault();
+        Session.set('selectedSensor', event.currentTarget.id);
+    },
+
   'click #AddConditionbtn': function(event) {
     event.preventDefault();
-    var accessToken_id = $('#sensorList').val();
-    var operator = $('#operatorValue').val();
+    var accessToken_id = Session.get('selectedSensor');
+    var operator = Session.get('selectedOperator');
     var targetValue = $('#targetValue').val();
 
     try {
@@ -120,24 +132,28 @@ Template.CreateRuleSetPage.helpers({
 
   'get_ruleset_conditionInfo': function() {
     return Session.get('list_conditionInfo');
-  }
-});
+},
 
-Template.list_of_sensors.helpers({
-  'get_accessTokens': function() {
-    return AccessTokens.find({}, {
-      sort: {
-        sensor: 1
-      }
-    }, {
-      fields: {
-        _id: 1,
-        sensor: 1,
-        location: 1,
-        type: 1
-      }
-    });
-  }
+    'list_of_sensors':function() {
+        return AccessTokens.find({_id:{$nin:[Session.get('selectedSensor')]}}, {sort:{sensor:1}, fields:{_id:1, sensor:1, location:1, type:1}});
+    },
+
+    'selectedSensor':function() {
+        return AccessTokens.findOne({_id:Session.get('selectedSensor')});
+    },
+
+    'selectedOperator':function() {
+        return Session.get('selectedOperator');
+    },
+
+    'operatorList':function() {
+        var operatorList = ['>', '<', '>=', '<=', '=', '!='];
+        var index = operatorList.indexOf(Session.get('selectedOperator'));
+        if(index !== -1) {
+            operatorList.splice(index, 1);
+        }
+        return operatorList;
+    }
 });
 
 Template.list_of_rulesets.helpers({

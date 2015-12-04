@@ -99,8 +99,7 @@ SensorBubble.prototype = {
 
         this.context.font = '14px arial';
         this.context.fillStyle = '#337ab7';
-        var nameWidth = this.context.measureText(this.sensorName).width;
-        this.context.fillText(this.sensorName, this.x-(nameWidth/2), this.y-(this.radius*0.4), radius);
+        this.context.fillText(this.sensorName, this.x-(radius/2), this.y-(this.radius*0.4), radius);
         if(this.value !== undefined) {
             this.context.font = '18px arial';
             var valueWidth = this.context.measureText(this.value).width;
