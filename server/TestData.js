@@ -119,7 +119,6 @@ Meteor.startup(function() {
         "targetValue": "20",
         "fulfilled": false
       }],
-      "timeOfEvent": null,
       "userId": user_id
     });
 
@@ -133,7 +132,6 @@ Meteor.startup(function() {
         "targetValue": "50",
         "fulfilled": false
       }],
-      "timeOfEvent": null,
       "userId": user_id
     });
 
@@ -162,7 +160,6 @@ Meteor.startup(function() {
         "targetValue": "60",
         "fulfilled": false
       }],
-      "timeOfEvent": null,
       "userId": user_id
     });
 
@@ -176,7 +173,6 @@ Meteor.startup(function() {
         "targetValue": "1",
         "fulfilled": false
       }],
-      "timeOfEvent": null,
       "userId": user_id
     });
   }
