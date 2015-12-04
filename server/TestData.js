@@ -15,9 +15,7 @@ Meteor.startup(function() {
   });
 
   if (user) {
-    console.log("user._id: " + user._id);
     user_id = user._id;
-    console.log("user_id: " + user_id);
   }
 
   if (AccessTokens.find().count() === 0) {
