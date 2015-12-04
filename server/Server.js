@@ -87,7 +87,6 @@ Meteor.methods({
             title: title,
             message: message,
             conditions: list_of_conditions,
-            timeOfEvent: undefined,
             userId: Meteor.userId()
           }
           try  {

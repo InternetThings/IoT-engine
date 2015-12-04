@@ -43,7 +43,6 @@ Template.NotificationPage.helpers({
         results.push(notificationInfo);
     }
     });
-
     return results;
   }
 });
