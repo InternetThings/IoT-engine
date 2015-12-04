@@ -22,6 +22,7 @@ Template.DataVisualization.onRendered(function() {
     var canvas = document.getElementById('dataCanvas');
     context = canvas.getContext('2d');
     radius = (canvas.width*0.9)/6
+    canvas.width = $('#canvas-container').width();
     canvas.height = (radius*2)+canvas.width*0.1;
     x = radius+canvas.width*0.05;
     y = 0;
@@ -45,25 +46,22 @@ Template.DataVisualization.onRendered(function() {
                     y += (radius*2)+canvas.width*0.05;
                     canvas.height += (radius*2)+canvas.width*0.1;
                 }
-                var currentX = x;
-                var currentY = y;
-                console.log('currentY = ' + currentY + ' currentX = ' + currentX + ' canvas.hight = ' + canvas.height);
+                bubbles[sensor._id] = new SensorBubble(x, y, radius, sensor.location, undefined, EJSON.parse(DataTypes)['types'][sensor.type], context);
                 x += (radius*2)+canvas.width*0.05;
-                bubbles[sensor._id] = new SensorBubble(currentX, currentY, radius, sensor.location, undefined, EJSON.parse(DataTypes)['types'][sensor.type], context);
             }
         });
+        for(id in bubbles) {
+            if(bubbles[id].y+radius+5 > canvas.height) {
+                canvas.height = bubbles[id].y+radius+5;
+            }
+        }
         drawData();
     });
 });
 
 var drawData = function() {
-    console.log('Drawing');
-    context = document.getElementById('dataCanvas').getContext('2d');
     for(id in bubbles) {
         bubbles[id].context = context;
-        if(bubbles[id].y+radius+5 > context.canvas.height) {
-            context.canvas.height = bubbles[id].y+radius+5;
-        }
         bubbles[id].draw();
     }
 }
