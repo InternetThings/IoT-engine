@@ -1,5 +1,4 @@
 //Tests for adding sensors to accounts client side
-
 MochaWeb.testOnly(function() {
     var sensorId = Random.id();
     var tokenId;
@@ -15,12 +14,11 @@ MochaWeb.testOnly(function() {
             }
             else {
                 //We are not login, attempt login with password
-                Meteor.loginWithPassword('test@test.test', "123", function(error) {
+                Meteor.loginWithPassword('testuser@test.test', "123", function(error) {
                     if (error) {
                         //User is not created, create new user.
-                        console.log(error);
                         Accounts.createUser({
-                            username: 'test@test.test',
+                            username: 'testuser@test.test',
                             password: '123'
                         }, function(error) {
                             if (error) {
