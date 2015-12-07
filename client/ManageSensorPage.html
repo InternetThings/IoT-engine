@@ -1,43 +1,44 @@
 <template name="ManageSensorPage">
 
-  <div class="col-md-6">
-    <div class="form-group">
-      <h3>
-        Sensor Management
-      </h3>
-      <div class="list-group">
-        <a class="list-group-item active">Added sensors</a>
-        <ul class="list-group">
-          {{#each sensors}}
-          <li id="sensor-item" class="list-group-item">
-            <div class="btn-toolbar">
-              <strong>{{sensor}}</strong> &nbsp; - &nbsp; {{type}} &nbsp; - &nbsp; {{location}} {{#if public}}
-              <button id="public-btn" class="btn pull-right btn-xs" disabled>Public</button> &nbsp;
-              <button id="private-btn" class="btn pull-right btn-xs">Private</button>
-              {{else}}
-              <button id="public-btn" class="btn pull-right btn-xs">Public</button> &nbsp;
-              <button id="private-btn" class="btn pull-right btn-xs" disabled>Private</button>
-              {{/if}}
+    <div class="col-md-6">
+        <div class="form-group">
+            <h3>
+                Sensor Management
+            </h3>
+            <div class="list-group">
+                <a class="list-group-item active">Added sensors</a>
+                <ul class="list-group">
+                    {{#each sensors}}
+                        <li id="sensor-item" class="list-group-item">
+                            <div class="btn-toolbar">
+                                <strong>{{sensor}}</strong> &nbsp; - &nbsp; {{type}} &nbsp; - &nbsp; {{location}}
+                                {{#if public}}
+                                    <button id="public-btn" class="btn pull-right btn-xs" disabled>Public</button> &nbsp;
+                                    <button id="private-btn" class="btn pull-right btn-xs">Private</button>
+                                {{else}}
+                                    <button id="public-btn" class="btn pull-right btn-xs">Public</button> &nbsp;
+                                    <button id="private-btn" class="btn pull-right btn-xs" disabled>Private</button>
+                                {{/if}}
+                            </div>
+                        </li>
+                    {{/each}}
+                </ul>
             </div>
-          </li>
-          {{/each}}
-        </ul>
-      </div>
+        </div>
     </div>
-  </div>
 
-  <div class="col-md-6">
-    <h3>
-      Generate a token
-    </h3>
-    <div class="input-group input-group-lg">
-      <input id="tokenField" type="text" class="form-control input-lg" disabled value="{{accessToken}}">
-      <div class="input-group-btn">
-          <button id="tokenButton" class="btn btn-primary input-lg">Generate</button>
+    <div class="col-md-6">
+        <h3>
+            Generate a token
+        </h3>
+        <div class="input-group input-group-lg">
+            <input id="tokenField" type="text" class="form-control input-lg" disabled value="{{accessToken}}">
+            <div class="input-group-btn">
+                <button id="tokenButton" class="btn btn-primary input-lg">Generate</button>
+            </div>
+        </div>
+        <br>
+        <div class="well well-lg">Generate an access token and use it to register your sensor within the platform</div>
     </div>
-    </div>
-    <br>
-    <div class="well well-lg">Generate an access token and use it to register your sensor within the platform</div>
-  </div>
 
 </template>

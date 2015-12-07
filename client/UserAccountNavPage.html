@@ -1,32 +1,33 @@
 <template name="UserAccountNavPage">
-  <div class="row">
-    <div class="col-md-12 col-lg-12">
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="{{pathFor route='NotificationPage'}}">IoT Platform <span class="glyphicon glyphicon-cloud-upload"></span></a>
-          </div>
-          <form class="navbar-form navbar-right">
-            <div>
-              <label type="text"><span class="glyphicon glyphicon-user"></span> Welcome, {{currentUser.username}} &nbsp;&nbsp;&nbsp;</label>
-              <button class="logout btn btn-primary" id="Logoutbtn" type="button">Log Out</button>
-            </div>
-          </form>
-          <div>
-            <ul class="nav navbar-nav">
-              <li>
-                <a href="{{pathFor route='NotificationPage'}}">Data Visualization and Notifications</a>
-              </li>
-              <li>
-                <a href="{{pathFor route='CreateRuleSetPage'}}">Ruleset Creation</a>
-              </li>
-              <li>
-                <a href="{{pathFor route='ManageSensorPage'}}">Sensor Management</a>
-              </li>
-            </ul>
-          </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="{{pathFor route='NotificationPage'}}">IoT Platform <span class="glyphicon glyphicon-cloud-upload"></span></a>
+                    </div>
+                    <form class="navbar-form navbar-right">
+                        <div>
+                            <label type="text">
+                                <span class="glyphicon glyphicon-user"></span> Welcome, {{currentUser.username}} &nbsp;&nbsp;&nbsp;</label>
+                            <button class="logout btn btn-primary" id="Logoutbtn" type="button">Log Out</button>
+                        </div>
+                    </form>
+                    <div>
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="{{pathFor route='NotificationPage'}}">Data Visualization and Notifications</a>
+                            </li>
+                            <li>
+                                <a href="{{pathFor route='CreateRuleSetPage'}}">Ruleset Creation</a>
+                            </li>
+                            <li>
+                                <a href="{{pathFor route='ManageSensorPage'}}">Sensor Management</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         </div>
-      </nav>
     </div>
-  </div>
 </template>

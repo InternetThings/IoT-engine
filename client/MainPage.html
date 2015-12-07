@@ -1,10 +1,10 @@
 <template name="MainPage">
-  {{#if currentUser}}
-  {{> UserAccountNavPage}}
-  <div class="container-fluid">
-      {{> yield 'Content'}}
-  </div>
-  {{else}}
-      {{> LoginPage}}
-  {{/if}}
+    {{#if currentUser}}
+        {{> UserAccountNavPage}}
+        <div class="container-fluid">
+            {{> yield 'Content'}}
+        </div>
+    {{else}}
+        {{> LoginPage}}
+    {{/if}}
 </template>
