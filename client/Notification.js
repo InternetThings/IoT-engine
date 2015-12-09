@@ -22,7 +22,6 @@ Template.NotificationPage.helpers({
                 ruleset: 1
             }
         });
-
         notifications.forEach(function(notification) {
             ruleset = RuleSets.findOne({
                 _id: notification.ruleset
@@ -32,7 +31,6 @@ Template.NotificationPage.helpers({
                     message: 1
                 }
             });
-
             if (ruleset) {
                 notificationInfo = {
                     date: notification.date.toLocaleString('da-DK'),

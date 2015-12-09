@@ -178,7 +178,7 @@ ParseDataQueue = function() {
                 }
             });
             if (updated) {
-                updatedConditions.push({
+                updatedRuleSets.push({
                     _id: ruleSet._id,
                     conditions: updatedConditions
                 });
@@ -207,11 +207,11 @@ ParseDataQueue = function() {
                 date: {
                     $gt: tooOld
                 },
-                ruleSet: ruleSet._id
+                ruleset: ruleSet._id
             }).count() === 0) {
             Notifications.insert({
                 date: now,
-                ruleSet: ruleSet._id,
+                ruleset: ruleSet._id,
                 userId: ruleSet.userId
             });
         }

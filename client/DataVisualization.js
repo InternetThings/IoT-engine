@@ -2,6 +2,7 @@
 var bubbles = {};
 
 Template.DataVisualization.onCreated(function() {
+    bubbles = {};
     Meteor.subscribe('sensors', {
         onReady: function() {
             var sensors = [];
@@ -99,7 +100,7 @@ function SensorBubble(x, y, radius, sensorName, value, type, context) {
     this.type = type;
 }
 
-//SensorBubble function declarations. 
+//SensorBubble function declarations.
 SensorBubble.prototype = {
     draw: function() {
         this.context.clearRect(this.x - (radius + 5), this.y - (radius + 5), radius * 2 + 10, radius * 2 + 10);
